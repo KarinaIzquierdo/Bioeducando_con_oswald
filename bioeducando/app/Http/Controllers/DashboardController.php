@@ -9,18 +9,19 @@ class DashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
+        
+        // Cargamos la relación del rol para estar seguros
+        $user->load('role');
 
-        if (!$user->role) {
-            return view('home');
+        if ($user->role && $user->role->name === 'admin') {
+            return redirect()->route('admin.dashboard');
         }
 
-        switch ($user->role->name) {
-            case 'admin':
-                return redirect()->route('admin.dashboard');
-            case 'docente':
-                return redirect()->route('docente.dashboard');
-            default:
-                return view('home');
+        if ($user->role && $user->role->name === 'docente') {
+            return redirect()->route('docente.dashboard');
         }
+
+        // Si es un usuario normal o no tiene rol, se queda en el home
+        return view('home');
     }
 }

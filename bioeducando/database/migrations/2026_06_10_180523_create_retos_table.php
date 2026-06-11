@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('retos', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->date('end_date')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('titulo');
+            $table->text('descripcion')->nullable();
+            $table->string('estado')->default('activa');
+            $table->string('categoria')->nullable();
+            $table->string('dificultad')->nullable();
+            $table->integer('puntos')->default(0);
+            $table->string('duracion')->nullable();
+            $table->json('evidencias')->nullable();
+            $table->string('insignia')->nullable();
             $table->timestamps();
         });
     }
