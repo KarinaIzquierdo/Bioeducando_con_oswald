@@ -12,7 +12,7 @@
 
         /* Sidebar similar a los anteriores */
         .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; }
-        .admin-title { font-size: 2rem; font-weight: 400; color: #000; margin-bottom: 40px; }
+        .admin-title { font-size: 2rem; font-weight: 600; color: #000; margin-bottom: 40px; text-align: center; width: 100%; }
         .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; }
         .menu-item i { margin-right: 12px; }
         .menu-item.active { background-color: #3d5a44; }
@@ -22,7 +22,7 @@
         .btn-logout {
             width: 100%;
             padding: 12px;
-            background-color: black;
+            background-color: #3d5a44;
             color: white;
             border: none;
             border-radius: 10px;
@@ -34,10 +34,9 @@
             font-weight: 600;
             transition: 0.3s;
             margin-top: 10px;
-            text-transform: lowercase;
         }
         .btn-logout:hover {
-            background-color: #333;
+            background-color: #2d4433;
         }
 
         /* Contenido */
@@ -109,16 +108,19 @@
 <body>
 
     <div class="sidebar">
-        <h1 class="admin-title">Admin panel</h1>
+        <h1 class="admin-title">Admin</h1>
         <nav>
-            <a href="{{ route('usuarios.index') }}" class="menu-item">
+            <a href="{{ route('admin.dashboard') }}" class="menu-item {{ Request::is('admin') ? 'active' : '' }}">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+            <a href="{{ route('usuarios.index') }}" class="menu-item {{ Request::is('admin/usuarios*') ? 'active' : '' }}">
                 <i data-lucide="users"></i> Usuarios
             </a>
-            <a href="{{ route('admin.retos') }}" class="menu-item active">
-                <i data-lucide="leaf"></i> Retos ecológicos
+            <a href="{{ route('admin.retos') }}" class="menu-item {{ Request::is('admin/retos*') ? 'active' : '' }}">
+                <i data-lucide="leaf"></i> Retos Ecológicos
             </a>
-            <a href="{{ route('admin.comunidad') }}" class="menu-item">
-                <i data-lucide="flower-2"></i> Comunidad ambiental
+            <a href="{{ route('admin.comunidad') }}" class="menu-item {{ Request::is('admin/comunidad*') ? 'active' : '' }}">
+                <i data-lucide="flower-2"></i> Comunidad Ambiental
             </a>
         </nav>
         <div class="sidebar-footer">
@@ -159,14 +161,14 @@
                         <div class="form-group">
                             <label>Estado</label>
                             <select class="form-control" name="estado">
-                                <option value="activa" {{ $reto->estado == 'activa' ? 'selected' : '' }}>Activa ▼</option>
+                                <option value="activa" {{ $reto->estado == 'activa' ? 'selected' : '' }}>Activa</option>
                                 <option value="inactiva" {{ $reto->estado == 'inactiva' ? 'selected' : '' }}>Inactiva</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Categoría</label>
                             <select class="form-control" name="categoria">
-                                <option value="reciclaje" {{ $reto->categoria == 'reciclaje' ? 'selected' : '' }}>Reciclaje ▼</option>
+                                <option value="reciclaje" {{ $reto->categoria == 'reciclaje' ? 'selected' : '' }}>Reciclaje</option>
                                 <option value="agua" {{ $reto->categoria == 'agua' ? 'selected' : '' }}>Cuidado del Agua</option>
                                 <option value="energia" {{ $reto->categoria == 'energia' ? 'selected' : '' }}>Ahorro de Energía</option>
                                 <option value="biodiversidad" {{ $reto->categoria == 'biodiversidad' ? 'selected' : '' }}>Biodiversidad</option>
@@ -179,7 +181,7 @@
                             <label>Dificultad</label>
                             <select class="form-control" name="dificultad">
                                 <option value="facil" {{ $reto->dificultad == 'facil' ? 'selected' : '' }}>Fácil</option>
-                                <option value="intermedio" {{ $reto->dificultad == 'intermedio' ? 'selected' : '' }}>Intermedio ▼</option>
+                                <option value="intermedio" {{ $reto->dificultad == 'intermedio' ? 'selected' : '' }}>Intermedio</option>
                                 <option value="dificil" {{ $reto->dificultad == 'dificil' ? 'selected' : '' }}>Difícil</option>
                             </select>
                         </div>
@@ -197,7 +199,7 @@
                         <div class="form-group">
                             <label>Insignia</label>
                             <select class="form-control" name="insignia">
-                                <option value="experto" {{ $reto->insignia == 'experto' ? 'selected' : '' }}>Reciclador Experto ▼</option>
+                                <option value="experto" {{ $reto->insignia == 'experto' ? 'selected' : '' }}>Reciclador Experto</option>
                                 <option value="guardian" {{ $reto->insignia == 'guardian' ? 'selected' : '' }}>Guardián del Bosque</option>
                                 <option value="maestro" {{ $reto->insignia == 'maestro' ? 'selected' : '' }}>Maestro Ambiental</option>
                             </select>

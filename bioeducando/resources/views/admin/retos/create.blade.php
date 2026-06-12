@@ -10,7 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { display: flex; height: 100vh; background-color: #f4f7f4; }
         .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; }
-        .admin-title { font-size: 2rem; font-weight: 400; color: #000; margin-bottom: 40px; }
+        .admin-title { font-size: 2rem; font-weight: 600; color: #000; margin-bottom: 40px; text-align: center; width: 100%; }
         .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; }
         .menu-item i { margin-right: 12px; }
         .menu-item.active { background-color: #3d5a44; }
@@ -39,11 +39,20 @@
 </head>
 <body>
     <div class="sidebar">
-        <h1 class="admin-title">Admin panel</h1>
+        <h1 class="admin-title">Admin</h1>
         <nav>
-            <a href="{{ route('usuarios.index') }}" class="menu-item"><i data-lucide="users"></i> Usuarios</a>
-            <a href="{{ route('admin.retos') }}" class="menu-item active"><i data-lucide="leaf"></i> Retos ecológicos</a>
-            <a href="{{ route('admin.comunidad') }}" class="menu-item"><i data-lucide="flower-2"></i> Comunidad ambiental</a>
+            <a href="{{ route('admin.dashboard') }}" class="menu-item {{ Request::is('admin') ? 'active' : '' }}">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+            <a href="{{ route('usuarios.index') }}" class="menu-item {{ Request::is('admin/usuarios*') ? 'active' : '' }}">
+                <i data-lucide="users"></i> Usuarios
+            </a>
+            <a href="{{ route('admin.retos') }}" class="menu-item {{ Request::is('admin/retos*') ? 'active' : '' }}">
+                <i data-lucide="leaf"></i> Retos Ecológicos
+            </a>
+            <a href="{{ route('admin.comunidad') }}" class="menu-item {{ Request::is('admin/comunidad*') ? 'active' : '' }}">
+                <i data-lucide="flower-2"></i> Comunidad Ambiental
+            </a>
         </nav>
         <div class="sidebar-footer">
             <img src="/imagenes/Logo.svg" alt="Logo" class="sidebar-logo">

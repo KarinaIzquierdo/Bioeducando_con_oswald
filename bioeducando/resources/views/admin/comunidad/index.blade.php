@@ -12,11 +12,45 @@
 
         /* Sidebar */
         .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; }
-        .admin-title { font-size: 2rem; font-weight: 400; color: #000; margin-bottom: 40px; }
+        .admin-title { font-size: 2rem; font-weight: 600; color: #000; margin-bottom: 40px; text-align: center; width: 100%; }
         .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; }
         .menu-item i { margin-right: 12px; }
         .menu-item.active { background-color: #3d5a44; }
-        .sidebar-logo { width: 140px; filter: brightness(0); margin-top: auto; align-self: center; }
+        .sidebar-footer {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        .sidebar-logo { 
+            width: 140px; 
+            filter: brightness(0); 
+            margin-bottom: 5px; 
+        }
+
+        .btn-logout {
+            width: 100%;
+            padding: 12px;
+            background-color: #3d5a44;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+        .btn-logout:hover {
+            background-color: #2d4433;
+        }
 
         /* Contenido Principal */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
@@ -62,23 +96,38 @@
 
     <!-- Sidebar Izquierda -->
     <div class="sidebar">
-        <h1 class="admin-title">Admin panel</h1>
+        <h1 class="admin-title">Admin</h1>
         <nav>
+            <a href="{{ route('admin.dashboard') }}" class="menu-item {{ Request::is('admin') ? 'active' : '' }}">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
             <a href="{{ route('usuarios.index') }}" class="menu-item {{ Request::is('admin/usuarios*') ? 'active' : '' }}">
                 <i data-lucide="users"></i> Usuarios
             </a>
             <a href="{{ route('admin.retos') }}" class="menu-item {{ Request::is('admin/retos*') ? 'active' : '' }}">
-                <i data-lucide="leaf"></i> Retos ecológicos
+                <i data-lucide="leaf"></i> Retos Ecológicos
             </a>
             <a href="{{ route('admin.comunidad') }}" class="menu-item {{ Request::is('admin/comunidad*') ? 'active' : '' }}">
-                <i data-lucide="flower-2"></i> Comunidad ambiental
+                <i data-lucide="flower-2"></i> Comunidad Ambiental
+            </a>
+            <a href="{{ route('admin.steam.index') }}" class="menu-item {{ Request::is('admin/steam*') ? 'active' : '' }}">
+                <i data-lucide="microscope"></i> Gestionar STEAM
+            </a>
+            <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
+                <i data-lucide="book-open"></i> Gestionar PRAE
             </a>
             <a href="#" class="menu-item">
                 <i data-lucide="settings"></i> Configuración
             </a>
         </nav>
-        <div class="sidebar-footer" style="margin-top: auto; text-align: center; padding: 20px;">
+        <div class="sidebar-footer">
             <img src="/imagenes/Logo.svg" alt="Logo" class="sidebar-logo">
+            <form action="{{ route('logout') }}" method="POST" style="width: 100%;">
+                @csrf
+                <button type="submit" class="btn-logout">
+                    <i data-lucide="log-out"></i> Cerrar Sesión
+                </button>
+            </form>
         </div>
     </div>
 
@@ -89,58 +138,120 @@
         <div class="container">
             <!-- Feed Central -->
             <div class="feed">
+                @if(session('success'))
+                    <div style="background: #dcfce7; color: #15803d; padding: 15px 25px; border-radius: 12px; border: 1px solid #bbf7d0; font-weight: 600; margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
+                        <i data-lucide="check-circle"></i> {{ session('success') }}
+                    </div>
+                @endif
                 <!-- Caja de Publicación -->
                 <div class="create-post">
-                    <div class="create-post-header">
-                        <div class="avatar-small"><i data-lucide="user"></i></div>
-                        <textarea class="post-input" placeholder="¿Qué acción ambiental realizaste hoy?" rows="2"></textarea>
-                    </div>
-                    <div class="post-actions">
-                        <div class="action-icon"><i data-lucide="image" style="color: #6ab06a"></i> Foto/Video</div>
-                        <div class="action-icon"><i data-lucide="map-pin" style="color: #744d2d"></i> Ubicación</div>
-                        <button class="btn-post">Publicar</button>
-                    </div>
+                    <form action="{{ route('admin.comunidad.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="create-post-header">
+                            <div class="avatar-small"><i data-lucide="user"></i></div>
+                            <textarea class="post-input" name="contenido" placeholder="¿Qué acción ambiental realizaste hoy?" rows="2" required></textarea>
+                        </div>
+                        <div class="post-actions">
+                            <div style="display: flex; gap: 20px;">
+                                <!-- Input de archivo oculto -->
+                                <input type="file" id="media-upload" name="media" style="display: none;" accept="image/*,video/*" onchange="document.getElementById('file-name-display').innerText = this.files[0].name">
+                                <div class="action-icon" onclick="document.getElementById('media-upload').click()">
+                                    <i data-lucide="image" style="color: #6ab06a"></i> Foto/Video
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-post">Publicar</button>
+                        </div>
+                        <div id="file-name-display" style="margin-top: 10px; font-size: 0.85rem; color: #6ab06a; font-weight: 600; padding-left: 60px;"></div>
+                    </form>
                 </div>
 
-                <!-- Ejemplo Post 1 -->
+                <!-- Feed Dinámico -->
+                @foreach($publicaciones as $post)
                 <div class="post-card">
-                    <div class="post-header">
-                        <div class="avatar-small" style="background: #744d2d;"><i data-lucide="user"></i></div>
-                        <div class="post-user-info">
-                            <h4>María Gómez</h4>
-                            <span>Hace 2 horas • Escuela Ambiental</span>
+                    <div class="post-header" style="justify-content: space-between;">
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                            <div class="avatar-small" style="background: {{ $post->user->id % 2 == 0 ? '#6ab06a' : '#744d2d' }};">
+                                <i data-lucide="user"></i>
+                            </div>
+                            <div class="post-user-info">
+                                <h4>{{ $post->user->name }}</h4>
+                                <span>{{ $post->created_at->diffForHumans() }}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="post-content">
-                        🌳 Hoy sembramos 10 árboles nativos en nuestra escuela. 
-                        ¡Fue una experiencia increíble ver a todos participar por el planeta! #Reforestación #Bioeducando
-                    </div>
-                    <!-- Simulamos una foto con un fondo -->
-                    <div class="post-image" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                    <div class="post-footer">
-                        <div class="footer-item" style="color: #e63946;"><i data-lucide="heart"></i> 25 Me gusta</div>
-                        <div class="footer-item"><i data-lucide="message-square"></i> 8 Comentarios</div>
-                        <div class="footer-item"><i data-lucide="share-2"></i> Compartir</div>
-                    </div>
-                </div>
+                        
+                        @php
+                            $isAdmin = Auth::user() && Auth::user()->role && Auth::user()->role->name == 'admin';
+                        @endphp
 
-                <!-- Ejemplo Post 2 -->
-                <div class="post-card">
-                    <div class="post-header">
-                        <div class="avatar-small"><i data-lucide="user"></i></div>
-                        <div class="post-user-info">
-                            <h4>Carlos Ruiz</h4>
-                            <span>Hace 5 horas</span>
-                        </div>
+                        @if(Auth::id() == $post->user_id || $isAdmin)
+                        <form action="{{ route('admin.comunidad.destroy', $post->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta publicación?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" style="background: none; border: none; color: #ff4d4d; cursor: pointer; padding: 5px;">
+                                <i data-lucide="trash-2" size="18"></i>
+                            </button>
+                        </form>
+                        @endif
                     </div>
                     <div class="post-content">
-                        ♻️ ¡Misión cumplida! Completé el reto de "Clasificador experto". He separado mis residuos durante toda la semana y es más fácil de lo que parece. 
+                        {{ $post->contenido }}
                     </div>
+                    
+                    @if($post->media_path)
+                        @if($post->media_type == 'image')
+                            <div class="post-image" style="background-image: url('{{ asset('storage/' . $post->media_path) }}')"></div>
+                        @elseif($post->media_type == 'video')
+                            <div style="padding: 0 20px 20px 20px;">
+                                <video controls style="width: 100%; border-radius: 15px; max-height: 400px;">
+                                    <source src="{{ asset('storage/' . $post->media_path) }}" type="video/mp4">
+                                    Tu navegador no soporta videos.
+                                </video>
+                            </div>
+                        @endif
+                    @endif
+
                     <div class="post-footer">
-                        <div class="footer-item"><i data-lucide="heart"></i> 12 Me gusta</div>
-                        <div class="footer-item"><i data-lucide="message-square"></i> 3 Comentarios</div>
+                        <button class="footer-item like-btn" onclick="toggleLike(this)" style="background: none; border: none; font-family: inherit; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                            <i data-lucide="heart"></i> Me gusta
+                        </button>
+                        <button class="footer-item comment-btn" onclick="toggleComments({{ $post->id }})" style="background: none; border: none; font-family: inherit; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                            <i data-lucide="message-square"></i> Comentar
+                        </button>
+                    </div>
+
+                    <!-- Sección de Comentarios -->
+                    <div id="comments-{{ $post->id }}" class="comments-section" style="display: none; padding: 15px 25px; border-top: 1px solid #eee; background: #fcfdfc;">
+                        <div class="comments-list" style="margin-bottom: 15px;">
+                            @forelse($post->comentarios as $comentario)
+                                <div class="comment-item" style="margin-bottom: 10px; display: flex; gap: 10px;">
+                                    <div style="width: 30px; height: 30px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem;">
+                                        <i data-lucide="user" size="14"></i>
+                                    </div>
+                                    <div style="background: #f1f5f9; padding: 8px 15px; border-radius: 15px; flex: 1;">
+                                        <div style="font-weight: 700; font-size: 0.85rem; color: #1a3a2a;">{{ $comentario->user->name ?? 'Usuario' }}</div>
+                                        <div style="font-size: 0.9rem; color: #334155;">{{ $comentario->contenido }}</div>
+                                    </div>
+                                </div>
+                            @empty
+                                <p style="font-size: 0.85rem; color: #888; font-style: italic;">No hay comentarios todavía. ¡Sé el primero!</p>
+                            @endforelse
+                        </div>
+                        <form action="{{ route('comentarios.store') }}" method="POST" style="display: flex; gap: 10px;">
+                            @csrf
+                            <input type="hidden" name="publicacion_id" value="{{ $post->id }}">
+                            <input type="text" name="contenido" placeholder="Escribe un comentario..." style="flex: 1; padding: 8px 15px; border-radius: 20px; border: 1px solid #ddd; outline: none; font-size: 0.9rem;" required>
+                            <button type="submit" class="btn-post" style="padding: 5px 15px; font-size: 0.85rem;">Enviar</button>
+                        </form>
                     </div>
                 </div>
+                @endforeach
+
+                @if($publicaciones->isEmpty())
+                <div class="post-card" style="padding: 40px; text-align: center; color: #888;">
+                    <i data-lucide="message-circle" size="48" style="margin-bottom: 15px;"></i>
+                    <p>No hay publicaciones aún. ¡Sé el primero en compartir algo!</p>
+                </div>
+                @endif
             </div>
 
             <!-- Barra Derecha -->
@@ -173,6 +284,29 @@
 
     <script>
         lucide.createIcons();
+
+        function toggleLike(btn) {
+            const svg = btn.querySelector('svg');
+            btn.classList.toggle('liked');
+            if (btn.classList.contains('liked')) {
+                svg.style.fill = '#ff4d4d';
+                svg.style.stroke = '#ff4d4d';
+                btn.style.color = '#ff4d4d';
+            } else {
+                svg.style.fill = 'none';
+                svg.style.stroke = 'currentColor';
+                btn.style.color = 'inherit';
+            }
+        }
+
+        function toggleComments(postId) {
+            const section = document.getElementById('comments-' + postId);
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>

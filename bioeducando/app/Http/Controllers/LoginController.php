@@ -31,7 +31,8 @@ class LoginController extends Controller
                 return redirect()->route('admin.dashboard');
             }
             
-            return redirect()->intended('dashboard');
+            // Si no es admin, enviarlo al dashboard de usuario
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors([
@@ -44,7 +45,7 @@ class LoginController extends Controller
         \Illuminate\Support\Facades\Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/');
+        return redirect()->route('home');
     }
 
     public function showRecoveryForm()

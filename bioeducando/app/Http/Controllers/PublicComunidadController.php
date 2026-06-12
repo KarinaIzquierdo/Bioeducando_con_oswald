@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Publicacion;
+
+class PublicComunidadController extends Controller
+{
+    public function index()
+    {
+        // Cargamos las publicaciones con sus usuarios y sus comentarios (con los autores de los comentarios)
+        $publicaciones = Publicacion::with(['user', 'comentarios' => function($query) {
+            $query->with('user')->latest();
+        }])->latest()->get();
+        
+        return view('comunidad.publica', compact('publicaciones'));
+    }
+}

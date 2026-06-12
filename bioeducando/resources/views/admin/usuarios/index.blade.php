@@ -12,12 +12,25 @@
 
         /* Sidebar */
         .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; }
-        .admin-title { font-size: 2rem; font-weight: 400; color: #000; margin-bottom: 40px; }
+        .admin-title { font-size: 2rem; font-weight: 600; color: #000; margin-bottom: 40px; text-align: center; width: 100%; }
         .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; }
         .menu-item i { margin-right: 12px; }
         .menu-item.active { background-color: #3d5a44; }
-        .sidebar-footer { margin-top: auto; text-align: center; }
-        .sidebar-logo { width: 140px; filter: brightness(0); margin-bottom: 20px; }
+        .sidebar-footer {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 0;
+            width: 100%;
+        }
+
+        .sidebar-logo { 
+            width: 140px; 
+            filter: brightness(0); 
+            margin-bottom: 5px; 
+        }
 
         .btn-logout {
             width: 100%;
@@ -33,7 +46,7 @@
             gap: 10px;
             font-weight: 600;
             transition: 0.3s;
-            margin-top: 10px;
+            font-size: 0.95rem;
         }
         .btn-logout:hover {
             background-color: #2d4433;
@@ -104,16 +117,25 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <h1 class="admin-title">Admin panel</h1>
+        <h1 class="admin-title">Admin</h1>
         <nav>
-            <a href="{{ route('admin.dashboard') }}" class="menu-item active">
+            <a href="{{ route('admin.dashboard') }}" class="menu-item {{ Request::is('admin') ? 'active' : '' }}">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+            <a href="{{ route('usuarios.index') }}" class="menu-item {{ Request::is('admin/usuarios*') ? 'active' : '' }}">
                 <i data-lucide="users"></i> Usuarios
             </a>
-            <a href="{{ route('admin.retos') }}" class="menu-item">
-                <i data-lucide="leaf"></i> Retos ecológicos
+            <a href="{{ route('admin.retos') }}" class="menu-item {{ Request::is('admin/retos*') ? 'active' : '' }}">
+                <i data-lucide="leaf"></i> Retos Ecológicos
             </a>
-            <a href="{{ route('admin.comunidad') }}" class="menu-item">
-                <i data-lucide="flower-2"></i> Comunidad ambiental
+            <a href="{{ route('admin.comunidad') }}" class="menu-item {{ Request::is('admin/comunidad*') ? 'active' : '' }}">
+                <i data-lucide="flower-2"></i> Comunidad Ambiental
+            </a>
+            <a href="{{ route('admin.steam.index') }}" class="menu-item {{ Request::is('admin/steam*') ? 'active' : '' }}">
+                <i data-lucide="microscope"></i> Gestionar STEAM
+            </a>
+            <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
+                <i data-lucide="book-open"></i> Gestionar PRAE
             </a>
             <a href="#" class="menu-item">
                 <i data-lucide="settings"></i> Configuración
