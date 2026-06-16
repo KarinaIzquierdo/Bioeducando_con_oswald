@@ -64,10 +64,16 @@ Route::middleware(['auth'])->group(function () {
     })->name('contenido.creacion');
 
     // Proyectos STEAM
+    Route::get('/steam', [App\Http\Controllers\PraeController::class, 'index'])->name('steam.proyectos'); // Note: This might be a mistake in the original file, it was pointing to PraeController or was a closure. Let's fix it below.
+
     Route::get('/steam', function() {
-        $proyectos = \App\Models\ProyectoSteam::latest()->get();
+        $proyectos = \App\Models\ProyectoSteam::where('estado', 'aprobado')->latest()->get();
         return view('steam.index', compact('proyectos'));
     })->name('steam.proyectos');
+
+    Route::get('/steam/proponer', [App\Http\Controllers\SteamProposalController::class, 'create'])->name('steam.proponer');
+    Route::post('/steam/proponer', [App\Http\Controllers\SteamProposalController::class, 'store'])->name('steam.store_propuesta');
+    Route::get('/steam/mis-propuestas', [App\Http\Controllers\SteamProposalController::class, 'myProposals'])->name('steam.mis_propuestas');
 
     Route::get('/steam/{id}', function($id) {
         $proyecto = \App\Models\ProyectoSteam::findOrFail($id);
@@ -75,10 +81,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('steam.show');
 
     // Proyectos PRAE
-    Route::get('/prae', function() {
-        $proyectos = \App\Models\ProyectoPrae::latest()->get();
-        return view('prae.index', compact('proyectos'));
-    })->name('prae.proyectos');
+    Route::get('/prae', [App\Http\Controllers\PraeController::class, 'index'])->name('prae.proyectos');
 
     Route::get('/prae/{id}', function($id) {
         $proyecto = \App\Models\ProyectoPrae::findOrFail($id);
@@ -88,10 +91,10 @@ Route::middleware(['auth'])->group(function () {
     // Módulo Admin
     Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->group(function () {
         Route::get('/', [App\Http\Controllers\DashboardController::class, 'admin'])->name('admin.dashboard');
-        // Comunidad Ambiental
-        Route::get('/comunidad', [App\Http\Controllers\ComunidadController::class, 'index'])->name('admin.comunidad');
-        Route::post('/comunidad', [App\Http\Controllers\ComunidadController::class, 'store'])->name('admin.comunidad.store');
-        Route::delete('/comunidad/{id}', [App\Http\Controllers\ComunidadController::class, 'destroy'])->name('admin.comunidad.destroy');
+        // Comunidad Activa
+        Route::get('/comunidad-activa', [App\Http\Controllers\ComunidadController::class, 'index'])->name('admin.comunidad_activa');
+        Route::post('/comunidad-activa', [App\Http\Controllers\ComunidadController::class, 'store'])->name('admin.comunidad_activa.store');
+        Route::delete('/comunidad-activa/{id}', [App\Http\Controllers\ComunidadController::class, 'destroy'])->name('admin.comunidad_activa.destroy');
         
         // Retos Ecológicos
         Route::get('/retos', [RetoController::class, 'index'])->name('admin.retos');
@@ -109,12 +112,13 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/steam/{id}', [App\Http\Controllers\Admin\ProyectoSteamController::class, 'destroy'])->name('admin.steam.destroy');
 
         // Proyectos PRAE Admin
-        Route::get('/prae', [App\Http\Controllers\Admin\ProyectoPraeController::class, 'index'])->name('admin.prae.index');
-        Route::get('/prae/crear', [App\Http\Controllers\Admin\ProyectoPraeController::class, 'create'])->name('admin.prae.create');
-        Route::post('/prae', [App\Http\Controllers\Admin\ProyectoPraeController::class, 'store'])->name('admin.prae.store');
-        Route::get('/prae/editar/{id}', [App\Http\Controllers\Admin\ProyectoPraeController::class, 'edit'])->name('admin.prae.edit');
-        Route::put('/prae/editar/{id}', [App\Http\Controllers\Admin\ProyectoPraeController::class, 'update'])->name('admin.prae.update');
-        Route::delete('/prae/{id}', [App\Http\Controllers\Admin\ProyectoPraeController::class, 'destroy'])->name('admin.prae.destroy');
+        Route::get('/prae', [App\Http\Controllers\Admin\PraeController::class, 'index'])->name('admin.prae.index');
+        Route::put('/prae/info', [App\Http\Controllers\Admin\PraeController::class, 'updateInfo'])->name('admin.prae.updateInfo');
+        Route::post('/prae/actividades', [App\Http\Controllers\Admin\PraeController::class, 'storeActividad'])->name('admin.prae.storeActividad');
+        Route::put('/prae/actividades/{actividad}', [App\Http\Controllers\Admin\PraeController::class, 'updateActividad'])->name('admin.prae.updateActividad');
+        Route::delete('/prae/actividades/{actividad}', [App\Http\Controllers\Admin\PraeController::class, 'destroyActividad'])->name('admin.prae.destroyActividad');
+        Route::post('/prae/documentos', [App\Http\Controllers\Admin\PraeController::class, 'storeDocumento'])->name('admin.prae.storeDocumento');
+        Route::delete('/prae/documentos/{documento}', [App\Http\Controllers\Admin\PraeController::class, 'destroyDocumento'])->name('admin.prae.destroyDocumento');
         
         // Rutas simplificadas: solo ver y crear
         Route::get('/usuarios', [App\Http\Controllers\UsuarioController::class, 'index'])->name('usuarios.index');

@@ -26,10 +26,16 @@ class ProyectoSteamController extends Controller
             'titulo' => 'required|string|max:255',
             'categoria' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'imagen' => 'nullable|image|max:2048'
+            'objetivos' => 'nullable|string',
+            'materiales' => 'nullable|string',
+            'impacto_ambiental' => 'nullable|string',
+            'imagen' => 'nullable|image|max:2048',
+            'destacado' => 'nullable|boolean'
         ]);
 
         $data = $request->all();
+        $data['estado'] = 'aprobado'; // Proyectos creados por admin se aprueban automáticamente
+        $data['destacado'] = $request->has('destacado');
 
         if ($request->hasFile('imagen')) {
             $data['imagen'] = $request->file('imagen')->store('proyectos_steam', 'public');
@@ -54,10 +60,16 @@ class ProyectoSteamController extends Controller
             'titulo' => 'required|string|max:255',
             'categoria' => 'required|string|max:255',
             'descripcion' => 'required|string',
-            'imagen' => 'nullable|image|max:2048'
+            'objetivos' => 'nullable|string',
+            'materiales' => 'nullable|string',
+            'impacto_ambiental' => 'nullable|string',
+            'imagen' => 'nullable|image|max:2048',
+            'estado' => 'required|in:pendiente,aprobado,rechazado',
+            'destacado' => 'nullable|boolean'
         ]);
 
         $data = $request->all();
+        $data['destacado'] = $request->has('destacado');
 
         if ($request->hasFile('imagen')) {
             if ($proyecto->imagen) {

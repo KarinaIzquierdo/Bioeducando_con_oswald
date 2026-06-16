@@ -30,13 +30,37 @@
     <div class="sidebar">
         <h1 class="admin-title">Admin</h1>
         <nav>
-            <a href="{{ route('admin.dashboard') }}" class="menu-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-            <a href="{{ route('usuarios.index') }}" class="menu-item"><i data-lucide="users"></i> Usuarios</a>
-            <a href="{{ route('admin.retos') }}" class="menu-item"><i data-lucide="leaf"></i> Retos Ecológicos</a>
-            <a href="{{ route('admin.comunidad') }}" class="menu-item"><i data-lucide="flower-2"></i> Comunidad Ambiental</a>
-            <a href="{{ route('admin.steam.index') }}" class="menu-item"><i data-lucide="microscope"></i> Gestionar STEAM</a>
-            <a href="{{ route('admin.prae.index') }}" class="menu-item active"><i data-lucide="book-open"></i> Gestionar PRAE</a>
+            <a href="{{ route('admin.dashboard') }}" class="menu-item {{ Request::is('admin') ? 'active' : '' }}">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+            <a href="{{ route('usuarios.index') }}" class="menu-item {{ Request::is('admin/usuarios*') ? 'active' : '' }}">
+                <i data-lucide="users"></i> Usuarios
+            </a>
+            <a href="{{ route('admin.retos') }}" class="menu-item {{ Request::is('admin/retos*') ? 'active' : '' }}">
+                <i data-lucide="leaf"></i> Retos Ecológicos
+            </a>
+            <a href="{{ route('admin.comunidad_activa') }}" class="menu-item {{ Request::is('admin/comunidad-activa*') ? 'active' : '' }}">
+                <i data-lucide="flower-2"></i> Comunidad Activa
+            </a>
+            <a href="{{ route('admin.steam.index') }}" class="menu-item {{ Request::is('admin/steam*') ? 'active' : '' }}">
+                <i data-lucide="microscope"></i> Gestionar STEAM
+            </a>
+            <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
+                <i data-lucide="book-open"></i> Gestionar PRAE
+            </a>
+            <a href="#" class="menu-item">
+                <i data-lucide="settings"></i> Configuración
+            </a>
         </nav>
+        <div class="sidebar-footer">
+            <img src="/imagenes/Logo.svg" alt="Logo" class="sidebar-logo">
+            <form action="{{ route('logout') }}" method="POST" style="width: 100%;">
+                @csrf
+                <button type="submit" class="btn-logout">
+                    <i data-lucide="log-out"></i> Cerrar Sesión
+                </button>
+            </form>
+        </div>
     </div>
 
     <div class="main-content">

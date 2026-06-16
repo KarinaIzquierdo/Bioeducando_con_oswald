@@ -145,8 +145,8 @@
             <a href="{{ route('admin.retos') }}" class="menu-item {{ Request::is('admin/retos*') ? 'active' : '' }}">
                 <i data-lucide="leaf"></i> Retos Ecológicos
             </a>
-            <a href="{{ route('admin.comunidad') }}" class="menu-item {{ Request::is('admin/comunidad*') ? 'active' : '' }}">
-                <i data-lucide="flower-2"></i> Comunidad Ambiental
+            <a href="{{ route('admin.comunidad_activa') }}" class="menu-item {{ Request::is('admin/comunidad-activa*') ? 'active' : '' }}">
+                <i data-lucide="flower-2"></i> Comunidad Activa
             </a>
             <a href="{{ route('admin.steam.index') }}" class="menu-item {{ Request::is('admin/steam*') ? 'active' : '' }}">
                 <i data-lucide="microscope"></i> Gestionar STEAM

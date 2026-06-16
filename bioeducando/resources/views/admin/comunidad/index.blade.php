@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comunidad Ambiental - EcoMuro</title>
+    <title>Comunidad Activa - EcoMuro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -107,8 +107,8 @@
             <a href="{{ route('admin.retos') }}" class="menu-item {{ Request::is('admin/retos*') ? 'active' : '' }}">
                 <i data-lucide="leaf"></i> Retos Ecológicos
             </a>
-            <a href="{{ route('admin.comunidad') }}" class="menu-item {{ Request::is('admin/comunidad*') ? 'active' : '' }}">
-                <i data-lucide="flower-2"></i> Comunidad Ambiental
+            <a href="{{ route('admin.comunidad_activa') }}" class="menu-item {{ Request::is('admin/comunidad-activa*') ? 'active' : '' }}">
+                <i data-lucide="flower-2"></i> Comunidad Activa
             </a>
             <a href="{{ route('admin.steam.index') }}" class="menu-item {{ Request::is('admin/steam*') ? 'active' : '' }}">
                 <i data-lucide="microscope"></i> Gestionar STEAM
@@ -133,7 +133,7 @@
 
     <!-- Contenido Principal -->
     <div class="main-content">
-        <div class="top-bar">Eco-Muro: Comunidad Bioeducando</div>
+        <div class="top-bar">Bioeducando con Oswald - Comunidad Activa</div>
 
         <div class="container">
             <!-- Feed Central -->
@@ -145,7 +145,7 @@
                 @endif
                 <!-- Caja de Publicación -->
                 <div class="create-post">
-                    <form action="{{ route('admin.comunidad.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.comunidad_activa.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="create-post-header">
                             <div class="avatar-small"><i data-lucide="user"></i></div>
@@ -184,7 +184,7 @@
                         @endphp
 
                         @if(Auth::id() == $post->user_id || $isAdmin)
-                        <form action="{{ route('admin.comunidad.destroy', $post->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta publicación?')">
+                        <form action="{{ route('admin.comunidad_activa.destroy', $post->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta publicación?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" style="background: none; border: none; color: #ff4d4d; cursor: pointer; padding: 5px;">

@@ -16,9 +16,16 @@
         .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; }
         .menu-item i { margin-right: 12px; }
         .menu-item.active { background-color: #3d5a44; }
-        .sidebar-footer { margin-top: auto; text-align: center; }
-        .sidebar-logo { width: 140px; filter: brightness(0); margin-bottom: 20px; }
-
+        .sidebar-footer {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 0;
+            width: 100%;
+        }
+        .sidebar-logo { width: 140px; filter: brightness(0); margin-bottom: 5px; }
         .btn-logout {
             width: 100%;
             padding: 12px;
@@ -33,11 +40,9 @@
             gap: 10px;
             font-weight: 600;
             transition: 0.3s;
-            margin-top: 10px;
+            font-size: 0.95rem;
         }
-        .btn-logout:hover {
-            background-color: #2d4433;
-        }
+        .btn-logout:hover { background-color: #2d4433; }
 
         /* Contenido */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
@@ -119,12 +124,27 @@
             <a href="{{ route('admin.retos') }}" class="menu-item {{ Request::is('admin/retos*') ? 'active' : '' }}">
                 <i data-lucide="leaf"></i> Retos Ecológicos
             </a>
-            <a href="{{ route('admin.comunidad') }}" class="menu-item {{ Request::is('admin/comunidad*') ? 'active' : '' }}">
-                <i data-lucide="flower-2"></i> Comunidad Ambiental
+            <a href="{{ route('admin.comunidad_activa') }}" class="menu-item {{ Request::is('admin/comunidad-activa*') ? 'active' : '' }}">
+                <i data-lucide="flower-2"></i> Comunidad Activa
+            </a>
+            <a href="{{ route('admin.steam.index') }}" class="menu-item {{ Request::is('admin/steam*') ? 'active' : '' }}">
+                <i data-lucide="microscope"></i> Gestionar STEAM
+            </a>
+            <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
+                <i data-lucide="book-open"></i> Gestionar PRAE
+            </a>
+            <a href="#" class="menu-item">
+                <i data-lucide="settings"></i> Configuración
             </a>
         </nav>
         <div class="sidebar-footer">
             <img src="/imagenes/Logo.svg" alt="Logo" class="sidebar-logo">
+            <form action="{{ route('logout') }}" method="POST" style="width: 100%;">
+                @csrf
+                <button type="submit" class="btn-logout">
+                    <i data-lucide="log-out"></i> Cerrar Sesión
+                </button>
+            </form>
         </div>
     </div>
 

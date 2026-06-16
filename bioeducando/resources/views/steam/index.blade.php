@@ -261,6 +261,14 @@
             <div class="header-content">
                 <h1>Laboratorio de Innovación 🔬</h1>
                 <p>Descubre cómo la ciencia y la tecnología pueden salvar nuestro planeta.</p>
+                <div style="margin-top: 30px; display: flex; justify-content: center; gap: 15px;">
+                    <a href="{{ route('steam.proponer') }}" class="btn-ver-mas" style="background: #6ab06a;">
+                        <i data-lucide="plus-circle" size="18"></i> Proponer Proyecto
+                    </a>
+                    <a href="{{ route('steam.mis_propuestas') }}" class="btn-ver-mas" style="background: white; color: #1a3a2a; border: 2px solid #1a3a2a;">
+                        <i data-lucide="list" size="18"></i> Mis Propuestas
+                    </a>
+                </div>
             </div>
 
             <div class="projects-grid">

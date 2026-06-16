@@ -150,8 +150,14 @@
             <a href="{{ route('admin.retos') }}" class="menu-item {{ Request::is('admin/retos*') ? 'active' : '' }}">
                 <i data-lucide="leaf"></i> Retos Ecológicos
             </a>
-            <a href="{{ route('admin.comunidad') }}" class="menu-item {{ Request::is('admin/comunidad*') ? 'active' : '' }}">
-                <i data-lucide="flower-2"></i> Comunidad Ambiental
+            <a href="{{ route('admin.comunidad_activa') }}" class="menu-item {{ Request::is('admin/comunidad-activa*') ? 'active' : '' }}">
+                <i data-lucide="flower-2"></i> Comunidad Activa
+            </a>
+            <a href="{{ route('admin.steam.index') }}" class="menu-item {{ Request::is('admin/steam*') ? 'active' : '' }}">
+                <i data-lucide="microscope"></i> Gestionar STEAM
+            </a>
+            <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
+                <i data-lucide="book-open"></i> Gestionar PRAE
             </a>
             <a href="{{ route('admin.profile.edit') }}" class="menu-item {{ Request::is('admin/perfil*') ? 'active' : '' }}">
                 <i data-lucide="user"></i> Mi Perfil

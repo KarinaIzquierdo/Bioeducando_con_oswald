@@ -25,10 +25,10 @@
         .project-content { padding: 40px; }
         .project-badge { background: #e8f5e9; color: #2e7d32; padding: 8px 20px; border-radius: 50px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; display: inline-block; margin-bottom: 20px; }
         .project-title { font-size: 2.5rem; color: #1a3a2a; font-weight: 800; margin-bottom: 25px; }
-        .project-description-text { color: #475569; font-size: 1.1rem; line-height: 1.8; white-space: pre-line; }
-        .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px 0; width: 100%; }
-        .sidebar-logo { width: 140px; filter: brightness(0); margin-bottom: 5px; }
-        .btn-logout { width: 100%; padding: 12px; background-color: #000; color: white; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; transition: 0.3s; text-transform: lowercase; }
+        .project-section { margin-top: 35px; border-top: 2px solid #f0fdf4; padding-top: 30px; }
+        .section-title-detail { font-size: 1.4rem; color: #1a3a2a; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .section-title-detail i { color: #6ab06a; }
+        .section-text { color: #475569; font-size: 1rem; line-height: 1.7; white-space: pre-line; }
     </style>
 </head>
 <body>
@@ -92,9 +92,32 @@
                 <div class="project-content">
                     <span class="project-badge">{{ $proyecto->categoria }}</span>
                     <h1 class="project-title">{{ $proyecto->titulo }}</h1>
-                    <div class="project-description-text">
-                        {{ $proyecto->descripcion }}
+                    
+                    <div class="project-section">
+                        <h2 class="section-title-detail"><i data-lucide="book-open"></i> Descripción / Pasos</h2>
+                        <div class="section-text">{{ $proyecto->descripcion }}</div>
                     </div>
+
+                    @if($proyecto->objetivos)
+                    <div class="project-section">
+                        <h2 class="section-title-detail"><i data-lucide="target"></i> Objetivos</h2>
+                        <div class="section-text">{{ $proyecto->objetivos }}</div>
+                    </div>
+                    @endif
+
+                    @if($proyecto->materiales)
+                    <div class="project-section">
+                        <h2 class="section-title-detail"><i data-lucide="package"></i> Materiales Necesarios</h2>
+                        <div class="section-text">{{ $proyecto->materiales }}</div>
+                    </div>
+                    @endif
+
+                    @if($proyecto->impacto_ambiental)
+                    <div class="project-section">
+                        <h2 class="section-title-detail"><i data-lucide="leaf"></i> Impacto Ambiental</h2>
+                        <div class="section-text">{{ $proyecto->impacto_ambiental }}</div>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>

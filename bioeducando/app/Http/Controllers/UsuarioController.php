@@ -45,9 +45,9 @@ class UsuarioController extends Controller
                 'role_id' => $request->role_id,
             ]);
 
-            return redirect()->route('admin.dashboard')->with('success', '¡Usuario creado exitosamente!');
+            return redirect()->route('usuarios.index')->with('success', '¡Usuario creado exitosamente!');
         } catch (\Exception $e) {
-            return redirect()->route('admin.dashboard')->with('error', 'Hubo un fallo al crear el usuario. Inténtalo de nuevo.');
+            return redirect()->route('usuarios.index')->with('error', 'Hubo un fallo al crear el usuario. Inténtalo de nuevo.');
         }
     }
 }
