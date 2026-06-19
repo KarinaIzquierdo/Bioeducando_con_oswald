@@ -133,15 +133,16 @@
 
     <!-- Contenido Principal -->
     <div class="main-content">
-        <div class="top-bar">Bioeducando con Oswald - Comunidad Activa</div>
-
-        <div class="container">
-            <!-- Feed Central -->
-            <div class="feed">
-                @if(session('success'))
-                    <div style="background: #dcfce7; color: #15803d; padding: 15px 25px; border-radius: 12px; border: 1px solid #bbf7d0; font-weight: 600; margin-bottom: 25px; display: flex; align-items: center; gap: 10px;">
-                        <i data-lucide="check-circle"></i> {{ session('success') }}
-                    </div>
+        <div class="top-bar" style="height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: flex-end; padding: 0 40px; width: 100%; box-sizing: border-box;">
+            <div style="width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0;">
+                @if(Auth::check() && Auth::user()->avatar)
+                    <img src="{{ asset("storage/" . Auth::user()->avatar) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                @else
+                    <i data-lucide="user" style="width: 28px; height: 28px;"></i>
+                @endif
+            </div>
+        </div>
+        </div>
                 @endif
                 <!-- Caja de Publicación -->
                 <div class="create-post">

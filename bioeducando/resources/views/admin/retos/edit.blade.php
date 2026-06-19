@@ -149,8 +149,15 @@
     </div>
 
     <div class="main-content">
-        <div class="top-bar">
-            <span>Bioeducando con Oswald - Gestión de Retos</span>
+        <div class="top-bar" style="height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: flex-end; padding: 0 40px; width: 100%; box-sizing: border-box;">
+            <div style="width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0;">
+                @if(Auth::check() && Auth::user()->avatar)
+                    <img src="{{ asset("storage/" . Auth::user()->avatar) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                @else
+                    <i data-lucide="user" style="width: 28px; height: 28px;"></i>
+                @endif
+            </div>
+        </div>
         </div>
 
         <div class="content-padding">

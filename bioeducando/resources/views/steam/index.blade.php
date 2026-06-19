@@ -8,302 +8,90 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { 
-            background-color: #f0fdf4;
-            min-height: 100vh;
-        }
+        body { background-color: #f0f9ff; min-height: 100vh; display: flex; }
 
-        .sidebar { 
-            width: 260px; 
-            background-color: #6ab06a; 
-            display: flex; 
-            flex-direction: column; 
-            padding: 20px; 
-            position: fixed;
-            height: 100vh;
-            z-index: 1000;
-        }
-        
-        .sidebar-title { 
-            font-size: 2.2rem; 
-            font-weight: 600; 
-            color: #000; 
-            margin-bottom: 40px; 
-            padding-left: 10px;
-        }
-
-        .menu-item { 
-            display: flex; 
-            align-items: center; 
-            padding: 12px 15px; 
-            color: white; 
-            text-decoration: none; 
-            margin-bottom: 10px; 
-            border-radius: 10px; 
-            transition: 0.3s; 
-            font-size: 1rem;
-        }
-        
+        .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; position: fixed; height: 100vh; z-index: 1000; }
+        .sidebar-title { font-size: 2.2rem; font-weight: 600; color: #000; margin-bottom: 40px; padding-left: 10px; }
+        .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; font-size: 1rem; }
         .menu-item i { margin-right: 12px; width: 20px; }
-        
-        .menu-item.active { 
-            background-color: #3d5a44; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-        }
-        
-        .menu-item:hover:not(.active) { 
-            background-color: rgba(255,255,255,0.1); 
-        }
+        .menu-item.active { background-color: #3d5a44; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .menu-item:hover:not(.active) { background-color: rgba(255,255,255,0.1); }
+        .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px 0; width: 100%; }
+        .sidebar-logo { width: 140px; filter: brightness(0); margin-bottom: 5px; }
+        .btn-logout { width: 100%; padding: 12px; background-color: #000; color: white; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; transition: 0.3s; text-transform: lowercase; }
 
-        .sidebar-footer {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            padding: 20px 0;
-            width: 100%;
-        }
+        .main-content { flex: 1; margin-left: 260px; display: flex; flex-direction: column; min-height: 100vh; }
+        .top-bar { height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; width: 100%; position: sticky; top: 0; z-index: 900; }
+        .top-bar h2 { color: white; font-size: 1.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
+        .profile-icon { width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0; }
+        .profile-icon img { width: 100%; height: 100%; object-fit: cover; }
 
-        .sidebar-logo { 
-            width: 140px; 
-            filter: brightness(0); 
-            margin-bottom: 5px; 
-        }
-
-        .btn-logout {
-            width: 100%;
-            padding: 12px;
-            background-color: #000;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            transition: 0.3s;
-            text-transform: lowercase;
-        }
-
-        .main-content { margin-left: 260px; min-height: 100vh; display: flex; flex-direction: column; }
-        
-        .top-bar { 
-            height: 100px; 
-            background-color: #744d2d; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between;
-            padding: 0 40px; 
-        }
-
-        .top-bar h2 {
-            color: white;
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .profile-icon-container {
-            background: white;
-            padding: 5px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .container { padding: 40px; flex: 1; }
-
-        .header-content {
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        .header-content h1 {
-            font-size: 2.5rem;
-            color: #1a3a2a;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .header-content p {
-            color: #64748b;
-            font-size: 1.1rem;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .project-card {
-            background: white;
-            border-radius: 30px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: 0.3s;
-            border: 1px solid transparent;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            border-color: #6ab06a;
-        }
-
-        .project-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .project-info {
-            padding: 25px;
-        }
-
-        .project-category {
-            font-size: 0.8rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: #6ab06a;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .project-title {
-            font-size: 1.4rem;
-            color: #1a3a2a;
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-
-        .project-description {
-            color: #64748b;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .btn-ver-mas {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 25px;
-            background: #1a3a2a;
-            color: white;
-            border-radius: 12px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .project-card:hover .btn-ver-mas {
-            background: #6ab06a;
-        }
-
+        .container { padding: 40px; flex: 1; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .header-content h1 { font-size: 2.2rem; color: #1a3a2a; font-weight: 800; }
+        .btn-propose { background: #6ab06a; color: white; padding: 12px 25px; border-radius: 15px; text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+        .btn-propose:hover { background: #5aa05a; transform: translateY(-3px); }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
+        .project-card { background: white; border-radius: 25px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #e2e8f0; }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        .project-image { width: 100%; height: 200px; background: #f8fafc; overflow: hidden; }
+        .project-image img { width: 100%; height: 100%; object-fit: cover; }
+        .project-content { padding: 25px; }
+        .project-category { font-size: 0.75rem; font-weight: 800; color: #6ab06a; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .project-title { font-size: 1.4rem; color: #1a3a2a; font-weight: 800; margin-bottom: 12px; }
+        .project-desc { color: #64748b; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+        .btn-view { display: flex; align-items: center; justify-content: center; gap: 8px; background: #1a3a2a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 700; transition: 0.3s; }
+        .btn-view:hover { background: #2d4433; }
     </style>
 </head>
 <body>
-
     <div class="sidebar">
         <h1 class="sidebar-title">Usuario</h1>
         <nav>
-            <a href="{{ route('profile.edit') }}" class="menu-item">
-                <i data-lucide="user"></i> Perfil
-            </a>
-            <a href="{{ route('retos.publica') }}" class="menu-item">
-                <i data-lucide="leaf"></i> Retos Ecológicos
-            </a>
-            <a href="{{ route('comunidad.publica') }}" class="menu-item">
-                <i data-lucide="flower-2"></i> Comunidad Ambiental
-            </a>
-            <a href="{{ route('contenido.creacion') }}" class="menu-item">
-                <i data-lucide="clapperboard"></i> Eco-Estudio
-            </a>
-            <a href="{{ route('steam.proyectos') }}" class="menu-item active">
-                <i data-lucide="microscope"></i> Proyectos STEAM
-            </a>
-            <a href="{{ route('prae.proyectos') }}" class="menu-item">
-                <i data-lucide="book-open"></i> Proyectos PRAE
-            </a>
-            <a href="#" class="menu-item">
-                <i data-lucide="settings"></i> Configuración
-            </a>
+            <a href="{{ route('profile.edit') }}" class="menu-item"><i data-lucide="user"></i> Perfil</a>
+            <a href="{{ route('retos.publica') }}" class="menu-item"><i data-lucide="leaf"></i> Retos Ecológicos</a>
+            <a href="{{ route('comunidad.publica') }}" class="menu-item"><i data-lucide="flower-2"></i> Comunidad Ambiental</a>
+            <a href="{{ route('contenido.creacion') }}" class="menu-item"><i data-lucide="clapperboard"></i> Eco-Estudio</a>
+            <a href="{{ route('steam.proyectos') }}" class="menu-item active"><i data-lucide="microscope"></i> Proyectos STEAM</a>
+            <a href="{{ route('prae.proyectos') }}" class="menu-item"><i data-lucide="book-open"></i> Proyectos PRAE</a>
+            <a href="#" class="menu-item"><i data-lucide="settings"></i> Configuración</a>
         </nav>
         <div class="sidebar-footer">
             <img src="/imagenes/Logo.svg" alt="Logo" class="sidebar-logo">
-            <form action="{{ route('logout') }}" method="POST" style="width: 100%;">
-                @csrf
-                <button type="submit" class="btn-logout">cerrar sesión</button>
-            </form>
+            <form action="{{ route('logout') }}" method="POST" style="width: 100%;">@csrf<button type="submit" class="btn-logout">cerrar sesión</button></form>
         </div>
     </div>
-
     <div class="main-content">
         <div class="top-bar">
             <h2>Proyectos STEAM</h2>
-            <div class="profile-icon-container">
-                @if(Auth::user()->avatar)
-                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Perfil" style="border-radius: 50%; width: 50px; height: 50px; object-fit: cover;">
+            <div class="profile-icon">
+                @if(Auth::check() && Auth::user()->avatar)
+                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Perfil">
                 @else
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=fff&color=744d2d&size=50" alt="Perfil" style="border-radius: 50%; width: 50px; height: 50px;">
+                    <i data-lucide="user" style="width: 28px; height: 28px;"></i>
                 @endif
             </div>
         </div>
-
         <div class="container">
-            <div class="header-content">
-                <h1>Laboratorio de Innovación 🔬</h1>
-                <p>Descubre cómo la ciencia y la tecnología pueden salvar nuestro planeta.</p>
-                <div style="margin-top: 30px; display: flex; justify-content: center; gap: 15px;">
-                    <a href="{{ route('steam.proponer') }}" class="btn-ver-mas" style="background: #6ab06a;">
-                        <i data-lucide="plus-circle" size="18"></i> Proponer Proyecto
-                    </a>
-                    <a href="{{ route('steam.mis_propuestas') }}" class="btn-ver-mas" style="background: white; color: #1a3a2a; border: 2px solid #1a3a2a;">
-                        <i data-lucide="list" size="18"></i> Mis Propuestas
-                    </a>
-                </div>
-            </div>
-
+            <div class="header-content"><h1>Explora Proyectos STEAM 🔬</h1><a href="{{ route('steam.proponer') }}" class="btn-propose"><i data-lucide="plus-circle"></i> Proponer Proyecto</a></div>
             <div class="projects-grid">
                 @foreach($proyectos as $proyecto)
                 <div class="project-card">
-                    @if($proyecto->imagen)
-                        <img src="{{ asset('storage/' . $proyecto->imagen) }}" alt="{{ $proyecto->titulo }}" class="project-image">
-                    @else
-                        <div style="height: 200px; background: #eee; display: flex; align-items: center; justify-content: center;">
-                            <i data-lucide="image" size="48" color="#ccc"></i>
-                        </div>
-                    @endif
-                    <div class="project-info">
+                    <div class="project-image">
+                        @if($proyecto->imagen)<img src="{{ asset('storage/' . $proyecto->imagen) }}" alt="">
+                        @else<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #cbd5e1;"><i data-lucide="microscope" size="48"></i></div>@endif
+                    </div>
+                    <div class="project-content">
                         <span class="project-category">{{ $proyecto->categoria }}</span>
                         <h3 class="project-title">{{ $proyecto->titulo }}</h3>
-                        <p class="project-description">{{ Str::limit($proyecto->descripcion, 120) }}</p>
-                        <a href="{{ route('steam.show', $proyecto->id) }}" class="btn-ver-mas">
-                            Ver Proyecto <i data-lucide="arrow-right" size="18"></i>
-                        </a>
+                        <p class="project-desc">{{ Str::limit($proyecto->descripcion, 120) }}</p>
+                        <a href="{{ route('steam.show', $proyecto->id) }}" class="btn-view">Ver Proyecto <i data-lucide="arrow-right" size="16"></i></a>
                     </div>
                 </div>
                 @endforeach
             </div>
-
-            @if($proyectos->isEmpty())
-                <div style="text-align: center; padding: 60px; color: #94a3b8;">
-                    <i data-lucide="microscope" size="60" style="opacity: 0.3; margin-bottom: 20px;"></i>
-                    <p>No hay proyectos STEAM disponibles todavía. ¡Pronto subiremos nuevos experimentos!</p>
-                </div>
-            @endif
         </div>
     </div>
-
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
