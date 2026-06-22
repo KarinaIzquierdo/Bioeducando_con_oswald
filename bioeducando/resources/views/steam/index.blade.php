@@ -65,8 +65,8 @@
         <div class="top-bar">
             <h2>Proyectos STEAM</h2>
             <div class="profile-icon">
-                @if(Auth::check() && Auth::user()->avatar)
-                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Perfil">
+                @if(Auth::check() && Auth::user()->foto_path)
+                    <img src="{{ asset(Auth::user()->foto_path) }}" alt="Perfil">
                 @else
                     <i data-lucide="user" style="width: 28px; height: 28px;"></i>
                 @endif

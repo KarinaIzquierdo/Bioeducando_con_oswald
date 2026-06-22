@@ -8,7 +8,6 @@ use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\NoticiaController;
 use App\Http\Controllers\ContenidoController;
 use App\Http\Controllers\CampaniaController;
-use App\Http\Controllers\TemaController;
 use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\RetoController;
 use App\Http\Controllers\EvidenciaController;
@@ -18,6 +17,7 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::post("/comunidad-ambiental/publicar", [App\Http\Controllers\ComunidadController::class, "store"])->name("comunidad.publicar_user");
 Route::get('/comunidad-ambiental', [App\Http\Controllers\PublicComunidadController::class, 'index'])->name('comunidad.publica');
 Route::get('/nuestros-retos', [App\Http\Controllers\PublicRetoController::class, 'index'])->name('retos.publica');
 Route::get('/buscar', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
@@ -146,7 +146,7 @@ Route::middleware(['auth'])->group(function () {
     // Módulos generales (Contenido, Campañas, Comunidad, Retos)
     Route::resource('contenido', ContenidoController::class);
     Route::resource('campanias', CampaniaController::class);
-    Route::resource('comunidad', TemaController::class);
+    Route::post('/comunidad', [App\Http\Controllers\ComunidadController::class, 'store'])->name('comunidad.store');
     Route::post('comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
     Route::resource('retos', RetoController::class);
     Route::resource('evidencias', EvidenciaController::class);

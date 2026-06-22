@@ -47,7 +47,10 @@
 
         .doc-item { display: flex; align-items: center; gap: 20px; padding: 20px; background: #f8fafc; border-radius: 20px; text-decoration: none; color: #1e293b; transition: 0.3s; margin-bottom: 15px; border: 1px solid #f1f5f9; }
         .doc-item:hover { background: #f1f5f9; border-color: #6ab06a; transform: scale(1.02); }
-        .doc-icon { width: 50px; height: 50px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #6ab06a; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .doc-icon { width: 50px; height: 50px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #6ab06a; box-shadow: 0 4px 10px rgba(0,0,0,0.05); flex-shrink: 0; }
+        .doc-info { display: flex; flex-direction: column; }
+        .doc-info span { font-weight: 700; font-size: 1.05rem; color: #1a3a2a; }
+        .doc-info small { color: #6ab06a; font-weight: 600; font-size: 0.85rem; }
         
         @media (max-width: 1024px) { .section-grid { grid-template-columns: 1fr; } .main-content { margin-left: 0; } .sidebar { display: none; } }
     </style>
@@ -74,8 +77,8 @@
         <div class="top-bar">
             <h2>Proyectos PRAE</h2>
             <div class="profile-icon">
-                @if(Auth::check() && Auth::user()->avatar)
-                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Perfil">
+                @if(Auth::check() && Auth::user()->foto_path)
+                    <img src="{{ asset(Auth::user()->foto_path) }}" alt="Perfil">
                 @else
                     <i data-lucide="user" style="width: 28px; height: 28px;"></i>
                 @endif
@@ -124,7 +127,7 @@
                     <div class="card">
                         <h2 class="section-title"><i data-lucide="file-text"></i> Documentos</h2>
                         @forelse($documentos as $doc)
-                            <a href="{{ asset('storage/' . $doc->archivo_path) }}" class="doc-item" target="_blank">
+                            <a href="{{ asset('storage/' . $doc->archivo_path) }}" class="doc-item" target="_blank" download="{{ $doc->titulo }}.pdf">
                                 <div class="doc-icon"><i data-lucide="download"></i></div>
                                 <div class="doc-info"><span>{{ $doc->titulo }}</span><small>PDF para descargar</small></div>
                             </a>

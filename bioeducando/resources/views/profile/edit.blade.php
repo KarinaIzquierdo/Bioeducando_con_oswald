@@ -60,8 +60,9 @@
         <div class="top-bar">
             <h2>Mi Perfil</h2>
             <div class="profile-icon">
-                @if(Auth::check() && Auth::user()->avatar)
-                    <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Perfil">
+                @if(Auth::check() && Auth::user()->foto_path)
+                    <img src="{{ asset(Auth::user()->foto_path) }}" alt="Perfil" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <i data-lucide="user" style="width: 28px; height: 28px; display: none;"></i>
                 @else
                     <i data-lucide="user" style="width: 28px; height: 28px;"></i>
                 @endif
@@ -69,10 +70,20 @@
         </div>
         <div class="content-padding">
             @if(session('success'))<div style="background: #dcfce7; color: #15803d; padding: 15px; border-radius: 12px; margin-bottom: 25px; font-weight: 600;">{{ session('success') }}</div>@endif
+            @if($errors->any())
+                <div style="background: #fee2e2; color: #b91c1c; padding: 15px; border-radius: 12px; margin-bottom: 25px; font-weight: 600;">
+                    <ul style="margin: 0; padding-left: 20px;">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="profile-container">
                 <div class="avatar-section card">
-                    <div class="avatar-circle" onclick="document.getElementById('avatar-input').click()">
-                        @if($user->avatar)<img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar" id="avatar-preview">
+                    <div class="avatar-circle" onclick="document.getElementById('foto-input').click()">
+                        @if($user->foto_path)<img src="{{ asset($user->foto_path) }}" alt="Avatar" id="avatar-preview" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <i data-lucide="camera" size="40" style="display: none;"></i>
                         @else<i data-lucide="camera" size="40"></i>@endif
                     </div>
                     <h3>{{ $user->name }}</h3>
@@ -84,7 +95,7 @@
                         <h2 class="section-title"><i data-lucide="user-cog"></i> Datos Personales</h2>
                         <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf @method('PUT')
-                            <input type="file" name="avatar" id="avatar-input" style="display: none;" accept="image/*" onchange="previewAvatar(this)">
+                            <input type="file" name="foto_perfil" id="foto-input" style="display: none;" accept="image/png, image/jpeg" onchange="previewAvatar(this)">
                             <div class="form-group"><label>Nombre Completo</label><input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}"></div>
                             <div class="form-group"><label>Correo Electrónico</label><input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}"></div>
                             <div class="form-group"><label>Número Telefónico</label><input type="text" name="phone" class="form-control" value="{{ old('phone', $user->phone ?? '') }}" placeholder="Ej: +57 300 123 4567"></div>
@@ -107,7 +118,16 @@
     </div>
     <script>
         lucide.createIcons();
-        function previewAvatar(input) { if (input.files && input.files[0]) { const reader = new FileReader(); reader.onload = function(e) { const circle = document.querySelector('.avatar-circle'); circle.innerHTML = `<img src="${e.target.result}" alt="Preview">`; }; reader.readAsDataURL(input.files[0]); } }
+        function previewAvatar(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const circle = document.querySelector('.avatar-circle');
+                    circle.innerHTML = `<img src="${e.target.result}" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">`;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 </body>
 </html>

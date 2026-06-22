@@ -180,8 +180,9 @@
     <div class="main-content">
         <div class="top-bar" style="height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: flex-end; padding: 0 40px; width: 100%; box-sizing: border-box;">
             <div style="width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0;">
-                @if(Auth::check() && Auth::user()->avatar)
-                    <img src="{{ asset("storage/" . Auth::user()->avatar) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                @if(Auth::check() && Auth::user()->foto_path)
+                    <img src="{{ asset(Auth::user()->foto_path) }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <i data-lucide="user" style="width: 28px; height: 28px; display: none;"></i>
                 @else
                     <i data-lucide="user" style="width: 28px; height: 28px;"></i>
                 @endif
@@ -206,8 +207,10 @@
 
             <div class="profile-container">
                 <div class="avatar-section card">
-                    <div class="avatar-circle">
-                        <i data-lucide="user" size="60"></i>
+                    <div class="avatar-circle" onclick="document.getElementById('foto-input').click()" style="cursor: pointer;">
+                        @if($user->foto_path)<img src="{{ asset($user->foto_path) }}" alt="Avatar" id="avatar-preview" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <i data-lucide="user" size="60" style="display: none;"></i>
+                        @else<i data-lucide="user" size="60"></i>@endif
                     </div>
                     <h3>{{ $user->name }}</h3>
                     <p>Administrador del Sistema</p>
@@ -220,9 +223,10 @@
                     <!-- Datos Personales -->
                     <div class="card" style="margin-bottom: 30px;">
                         <h2 class="section-title"><i data-lucide="user-cog"></i> Datos Personales</h2>
-                        <form action="{{ route('admin.profile.update') }}" method="POST">
+                        <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <input type="file" name="foto_perfil" id="foto-input" style="display: none;" accept="image/png, image/jpeg" onchange="previewAvatar(this)">
                             <div class="form-group">
                                 <label>Nombre Completo</label>
                                 <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}">
@@ -267,6 +271,16 @@
 
     <script>
         lucide.createIcons();
+        function previewAvatar(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const circle = document.querySelector('.avatar-circle');
+                    circle.innerHTML = `<img src="${e.target.result}" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">`;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 </body>
 </html>

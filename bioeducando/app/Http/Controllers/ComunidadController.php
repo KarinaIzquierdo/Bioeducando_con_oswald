@@ -40,7 +40,11 @@ class ComunidadController extends Controller
             'media_type' => $mediaType,
         ]);
 
-        return redirect()->route('admin.comunidad')->with('success', '¡Publicación compartida con éxito!');
+        if (Auth::user()->role && Auth::user()->role->name == 'admin') {
+            return redirect()->route('admin.comunidad_activa')->with('success', '¡Publicación compartida con éxito!');
+        }
+
+        return redirect()->route('comunidad.publica')->with('success', '¡Publicación compartida con éxito!');
     }
 
     public function destroy($id)
