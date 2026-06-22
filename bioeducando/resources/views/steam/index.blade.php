@@ -10,15 +10,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #f0f9ff; min-height: 100vh; display: flex; }
 
-        .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; position: fixed; height: 100vh; z-index: 1000; }
-        .sidebar-title { font-size: 2.2rem; font-weight: 600; color: #000; margin-bottom: 40px; padding-left: 10px; }
+        .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; position: fixed; height: 100vh; z-index: 1000; overflow-y: auto; }
+        .sidebar-title { font-size: 2.2rem; font-weight: 600; color: #000; margin-bottom: 25px; padding-left: 10px; flex-shrink: 0; }
         .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; font-size: 1rem; }
         .menu-item i { margin-right: 12px; width: 20px; }
         .menu-item.active { background-color: #3d5a44; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .menu-item:hover:not(.active) { background-color: rgba(255,255,255,0.1); }
-        .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px 0; width: 100%; }
-        .sidebar-logo { width: 140px; filter: brightness(0); margin-bottom: 5px; }
-        .btn-logout { width: 100%; padding: 12px; background-color: #000; color: white; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; transition: 0.3s; text-transform: lowercase; }
+        .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 15px 0; width: 100%; flex-shrink: 0; }
+        .sidebar-logo { width: 120px; max-width: 100%; filter: brightness(0); margin-bottom: 5px; }
+        .btn-logout { width: 100%; padding: 12px; background-color: #000; color: white; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; transition: 0.3s; text-transform: lowercase; font-size: 0.9rem; }
 
         .main-content { flex: 1; margin-left: 260px; display: flex; flex-direction: column; min-height: 100vh; }
         .top-bar { height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; width: 100%; position: sticky; top: 0; z-index: 900; }
@@ -42,6 +42,17 @@
         .project-desc { color: #64748b; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
         .btn-view { display: flex; align-items: center; justify-content: center; gap: 8px; background: #1a3a2a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 700; transition: 0.3s; }
         .btn-view:hover { background: #2d4433; }
+
+        .my-proposals { background: white; border-radius: 20px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .my-proposals h2 { font-size: 1.2rem; color: #1a3a2a; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .proposal-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; border-radius: 14px; background: #f8fafc; margin-bottom: 10px; }
+        .proposal-item:last-child { margin-bottom: 0; }
+        .proposal-item h4 { color: #1a3a2a; font-size: 1rem; margin-bottom: 4px; }
+        .proposal-item p { color: #94a3b8; font-size: 0.8rem; }
+        .status-badge { padding: 5px 14px; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .status-pendiente { background: #fef9c3; color: #854d0e; }
+        .status-aprobado { background: #dcfce7; color: #166534; }
+        .status-rechazado { background: #fee2e2; color: #991b1b; }
     </style>
 </head>
 <body>
@@ -74,8 +85,24 @@
         </div>
         <div class="container">
             <div class="header-content"><h1>Explora Proyectos STEAM 🔬</h1><a href="{{ route('steam.proponer') }}" class="btn-propose"><i data-lucide="plus-circle"></i> Proponer Proyecto</a></div>
+
+            @if(Auth::check() && $misPropuestas->count() > 0)
+            <div class="my-proposals">
+                <h2><i data-lucide="inbox" size="22"></i> Mis Propuestas</h2>
+                @foreach($misPropuestas as $propuesta)
+                <div class="proposal-item">
+                    <div>
+                        <h4>{{ $propuesta->titulo }}</h4>
+                        <p>{{ $propuesta->categoria }} • {{ $propuesta->created_at->format('d/m/Y') }}</p>
+                    </div>
+                    <span class="status-badge status-{{ $propuesta->estado }}">{{ $propuesta->estado }}</span>
+                </div>
+                @endforeach
+            </div>
+            @endif
+
             <div class="projects-grid">
-                @foreach($proyectos as $proyecto)
+                @forelse($proyectos as $proyecto)
                 <div class="project-card">
                     <div class="project-image">
                         @if($proyecto->imagen)<img src="{{ asset('storage/' . $proyecto->imagen) }}" alt="">
@@ -88,7 +115,13 @@
                         <a href="{{ route('steam.show', $proyecto->id) }}" class="btn-view">Ver Proyecto <i data-lucide="arrow-right" size="16"></i></a>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                <div style="grid-column: 1 / -1; text-align: center; padding: 60px; color: #64748b;">
+                    <i data-lucide="microscope" size="48" style="margin-bottom: 15px;"></i>
+                    <h3 style="font-size: 1.2rem; font-weight: 700; color: #1a3a2a; margin-bottom: 10px;">No hay proyectos disponibles</h3>
+                    <p>¡Sé el primero en proponer un proyecto STEAM!</p>
+                </div>
+                @endforelse
             </div>
         </div>
     </div>

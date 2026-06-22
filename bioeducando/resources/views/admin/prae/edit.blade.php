@@ -15,7 +15,8 @@
         .menu-item i { margin-right: 12px; }
         .menu-item.active { background-color: #3d5a44; }
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
-        .top-bar { height: 80px; background-color: #744d2d; display: flex; align-items: center; padding: 0 40px; color: white; }
+        .top-bar { height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; color: white; }
+        .top-bar h2 { color: white; font-size: 1.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin: 0; display: flex; align-items: center; gap: 12px; }
         .content-padding { padding: 40px; }
         .form-card { background: white; padding: 40px; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto; }
         .form-group { margin-bottom: 25px; }
@@ -48,6 +49,9 @@
             <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
                 <i data-lucide="book-open"></i> Gestionar PRAE
             </a>
+            <a href="{{ route('admin.profile.edit') }}" class="menu-item {{ Request::is('admin/perfil*') ? 'active' : '' }}">
+                <i data-lucide="user"></i> Mi Perfil
+            </a>
             <a href="#" class="menu-item">
                 <i data-lucide="settings"></i> Configuración
             </a>
@@ -64,7 +68,8 @@
     </div>
 
     <div class="main-content">
-        <div class="top-bar" style="height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: flex-end; padding: 0 40px; width: 100%; box-sizing: border-box;">
+        <div class="top-bar" style="width: 100%; box-sizing: border-box;">
+            <h2><i data-lucide="book-open"></i> Editar Proyecto PRAE</h2>
             <div style="width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0;">
                 @if(Auth::check() && Auth::user()->foto_path)
                     <img src="{{ asset(Auth::user()->foto_path) }}" style="width: 100%; height: 100%; object-fit: cover;">
@@ -72,7 +77,6 @@
                     <i data-lucide="user" style="width: 28px; height: 28px;"></i>
                 @endif
             </div>
-        </div>
         </div>
 
         <div class="content-padding">

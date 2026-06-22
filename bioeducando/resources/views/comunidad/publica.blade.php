@@ -135,7 +135,8 @@
                 @if($post->media_path)
                     <div class="media-box">
                         @if($post->media_type == "image")<img src="{{ asset("storage/" . $post->media_path) }}" alt="Post">
-                        @elseif($post->media_type == "video")<video controls><source src="{{ asset("storage/" . $post->media_path) }}" type="video/mp4"></video>@endif
+                        @elseif($post->media_type == "video")<video controls><source src="{{ asset("storage/" . $post->media_path) }}" type="video/mp4"></video>
+                        @elseif($post->media_type == "pdf")<a href="{{ asset("storage/" . $post->media_path) }}" target="_blank" style="display: flex; align-items: center; gap: 12px; background: #fee2e2; color: #b91c1c; padding: 15px 20px; border-radius: 12px; text-decoration: none; font-weight: 700;"><i data-lucide="file-text"></i> Ver / Descargar PDF</a>@endif
                     </div>
                 @endif
                 <div class="post-actions">

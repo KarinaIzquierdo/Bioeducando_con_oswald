@@ -21,13 +21,19 @@ class ComunidadController extends Controller
     {
         $request->validate([
             'contenido' => 'required|string',
-            'media' => 'nullable|file|mimes:jpg,jpeg,png,mp4,mov,avi|max:20480', // Máx 20MB
+            'media' => 'nullable|file|max:20480', // Cualquier tipo de archivo hasta 20MB
+            'pdf' => 'nullable|file|mimes:pdf|max:10240', // Máx 10MB para PDFs
         ]);
 
         $mediaPath = null;
         $mediaType = null;
 
-        if ($request->hasFile('media')) {
+        // Primero verificar si subió un PDF (prioridad)
+        if ($request->hasFile('pdf')) {
+            $file = $request->file('pdf');
+            $mediaPath = $file->store('comunidad', 'public');
+            $mediaType = 'pdf';
+        } elseif ($request->hasFile('media')) {
             $file = $request->file('media');
             $mediaPath = $file->store('comunidad', 'public');
             $mediaType = str_contains($file->getMimeType(), 'video') ? 'video' : 'image';
@@ -65,7 +71,7 @@ class ComunidadController extends Controller
 
         // Redirigir según el rol del usuario para que no caigan en la vista equivocada
         if (Auth::user()->role && Auth::user()->role->name == 'admin') {
-            return redirect()->route('admin.comunidad')->with('success', 'Publicación eliminada correctamente.');
+            return redirect()->route('admin.comunidad_activa')->with('success', 'Publicación eliminada correctamente.');
         }
 
         return redirect()->route('comunidad.publica')->with('success', 'Publicación eliminada correctamente.');

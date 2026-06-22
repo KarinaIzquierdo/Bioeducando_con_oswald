@@ -46,7 +46,8 @@
 
         /* Contenido Principal */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
-        .top-bar { height: 80px; background-color: #744d2d; display: flex; align-items: center; padding: 0 40px; color: white; font-weight: 600; }
+        .top-bar { height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; color: white; }
+        .top-bar h2 { color: white; font-size: 1.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin: 0; display: flex; align-items: center; gap: 12px; }
         
         .content-padding { padding: 40px; max-width: 900px; margin: 0 auto; width: 100%; }
         
@@ -134,6 +135,24 @@
         }
         .alert-success { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
         .alert-error { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        .password-wrapper { position: relative; display: flex; align-items: center; }
+        .password-wrapper input { width: 100%; padding-right: 50px; }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+        .toggle-password:hover { color: #6ab06a; }
+        .toggle-password svg { width: 20px; height: 20px; }
     </style>
 </head>
 <body>
@@ -178,7 +197,8 @@
     </div>
 
     <div class="main-content">
-        <div class="top-bar" style="height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: flex-end; padding: 0 40px; width: 100%; box-sizing: border-box;">
+        <div class="top-bar" style="width: 100%; box-sizing: border-box;">
+            <h2><i data-lucide="user"></i> Mi Perfil</h2>
             <div style="width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0;">
                 @if(Auth::check() && Auth::user()->foto_path)
                     <img src="{{ asset(Auth::user()->foto_path) }}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -187,7 +207,6 @@
                     <i data-lucide="user" style="width: 28px; height: 28px;"></i>
                 @endif
             </div>
-        </div>
         </div>
 
         <div class="content-padding">
@@ -249,15 +268,30 @@
                             @method('PUT')
                             <div class="form-group">
                                 <label>Contraseña Actual</label>
-                                <input type="password" name="current_password" class="form-control" placeholder="••••••••">
+                                <div class="password-wrapper">
+                                    <input type="password" id="current_password" name="current_password" class="form-control" placeholder="••••••••">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('current_password', this)">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Nueva Contraseña</label>
-                                <input type="password" name="password" class="form-control" placeholder="Mínimo 8 caracteres">
+                                <div class="password-wrapper">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder="Mínimo 8 caracteres">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Confirmar Nueva Contraseña</label>
-                                <input type="password" name="password_confirmation" class="form-control" placeholder="Repite la nueva contraseña">
+                                <div class="password-wrapper">
+                                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Repite la nueva contraseña">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('password_confirmation', this)">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
                             </div>
                             <button type="submit" class="btn-save" style="background: #1a3a2a;">
                                 <i data-lucide="shield-check"></i> Actualizar Contraseña
@@ -280,6 +314,18 @@
                 };
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
         }
     </script>
 </body>

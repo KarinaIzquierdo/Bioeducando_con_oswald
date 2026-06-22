@@ -64,11 +64,13 @@ Route::middleware(['auth'])->group(function () {
     })->name('contenido.creacion');
 
     // Proyectos STEAM
-    Route::get('/steam', [App\Http\Controllers\PraeController::class, 'index'])->name('steam.proyectos'); // Note: This might be a mistake in the original file, it was pointing to PraeController or was a closure. Let's fix it below.
-
     Route::get('/steam', function() {
-        $proyectos = \App\Models\ProyectoSteam::where('estado', 'aprobado')->latest()->get();
-        return view('steam.index', compact('proyectos'));
+        $proyectos = \App\Models\ProyectoSteam::whereIn('estado', ['aprobado', 'rechazado'])->latest()->get();
+        $misPropuestas = collect();
+        if (Auth::check()) {
+            $misPropuestas = \App\Models\ProyectoSteam::where('user_id', Auth::id())->latest()->get();
+        }
+        return view('steam.index', compact('proyectos', 'misPropuestas'));
     })->name('steam.proyectos');
 
     Route::get('/steam/proponer', [App\Http\Controllers\SteamProposalController::class, 'create'])->name('steam.proponer');
@@ -109,6 +111,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/steam', [App\Http\Controllers\Admin\ProyectoSteamController::class, 'store'])->name('admin.steam.store');
         Route::get('/steam/editar/{id}', [App\Http\Controllers\Admin\ProyectoSteamController::class, 'edit'])->name('admin.steam.edit');
         Route::put('/steam/editar/{id}', [App\Http\Controllers\Admin\ProyectoSteamController::class, 'update'])->name('admin.steam.update');
+        Route::patch('/steam/{id}/estado', [App\Http\Controllers\Admin\ProyectoSteamController::class, 'updateEstado'])->name('admin.steam.estado');
         Route::delete('/steam/{id}', [App\Http\Controllers\Admin\ProyectoSteamController::class, 'destroy'])->name('admin.steam.destroy');
 
         // Proyectos PRAE Admin

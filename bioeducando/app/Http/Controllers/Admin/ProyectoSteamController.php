@@ -11,8 +11,9 @@ class ProyectoSteamController extends Controller
 {
     public function index()
     {
-        $proyectos = ProyectoSteam::latest()->get();
-        return view('admin.steam.index', compact('proyectos'));
+        $solicitudes = ProyectoSteam::where('estado', 'pendiente')->latest()->get();
+        $proyectos = ProyectoSteam::whereIn('estado', ['aprobado', 'rechazado'])->latest()->get();
+        return view('admin.steam.index', compact('solicitudes', 'proyectos'));
     }
 
     public function create()
@@ -81,6 +82,21 @@ class ProyectoSteamController extends Controller
         $proyecto->update($data);
 
         return redirect()->route('admin.steam.index')->with('success', 'Proyecto STEAM actualizado con éxito.');
+    }
+
+    public function updateEstado(Request $request, $id)
+    {
+        $proyecto = ProyectoSteam::findOrFail($id);
+        $request->validate(['estado' => 'required|in:pendiente,aprobado,rechazado']);
+        $proyecto->update(['estado' => $request->estado]);
+
+        $mensaje = match($request->estado) {
+            'aprobado' => 'Proyecto aprobado exitosamente.',
+            'rechazado' => 'Proyecto rechazado.',
+            default => 'Estado actualizado.',
+        };
+
+        return redirect()->route('admin.steam.index')->with('success', $mensaje);
     }
 
     public function destroy($id)

@@ -9,9 +9,12 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: #f0fdf4; min-height: 100vh; }
-        .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; position: fixed; height: 100vh; z-index: 1000; }
-        .sidebar-title { font-size: 2.2rem; font-weight: 600; color: #000; margin-bottom: 40px; padding-left: 10px; }
+        .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; position: fixed; height: 100vh; z-index: 1000; overflow-y: auto; }
+        .sidebar-title { font-size: 2.2rem; font-weight: 600; color: #000; margin-bottom: 25px; padding-left: 10px; flex-shrink: 0; }
         .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; }
+        .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 15px 0; width: 100%; flex-shrink: 0; }
+        .sidebar-logo { width: 120px; max-width: 100%; filter: brightness(0); margin-bottom: 5px; }
+        .btn-logout { width: 100%; padding: 12px; background-color: #000; color: white; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 600; transition: 0.3s; text-transform: lowercase; font-size: 0.9rem; }
         .menu-item i { margin-right: 12px; width: 20px; }
         .menu-item.active { background-color: #3d5a44; }
         .main-content { margin-left: 260px; min-height: 100vh; display: flex; flex-direction: column; }
@@ -23,7 +26,11 @@
         .project-detail-card { background: white; border-radius: 30px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .project-hero-img { width: 100%; height: 400px; object-fit: cover; }
         .project-content { padding: 40px; }
-        .project-badge { background: #e8f5e9; color: #2e7d32; padding: 8px 20px; border-radius: 50px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; display: inline-block; margin-bottom: 20px; }
+        .project-badge { background: #e8f5e9; color: #2e7d32; padding: 8px 20px; border-radius: 50px; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; display: inline-block; margin-bottom: 10px; }
+        .status-badge { padding: 6px 16px; border-radius: 50px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; display: inline-block; margin-bottom: 20px; }
+        .status-aprobado { background: #e8f5e9; color: #2e7d32; }
+        .status-rechazado { background: #fee2e2; color: #b91c1c; }
+        .status-pendiente { background: #fef9c3; color: #854d0e; }
         .project-title { font-size: 2.5rem; color: #1a3a2a; font-weight: 800; margin-bottom: 25px; }
         .project-section { margin-top: 35px; border-top: 2px solid #f0fdf4; padding-top: 30px; }
         .section-title-detail { font-size: 1.4rem; color: #1a3a2a; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
@@ -73,8 +80,6 @@
                 @endif
             </div>
         </div>
-        </div>
-        </div>
 
         <div class="container">
             <a href="{{ route('steam.proyectos') }}" class="btn-back">
@@ -92,6 +97,7 @@
                 
                 <div class="project-content">
                     <span class="project-badge">{{ $proyecto->categoria }}</span>
+                    <div class="status-badge status-{{ $proyecto->estado }}">{{ ucfirst($proyecto->estado) }}</div>
                     <h1 class="project-title">{{ $proyecto->titulo }}</h1>
                     
                     <div class="project-section">

@@ -102,6 +102,7 @@
                         @csrf
                         <div class="form-group"><label>Descripción</label><textarea name="contenido" class="form-control" rows="4" placeholder="Cuéntanos sobre tu creación..."></textarea></div>
                         <div class="form-group"><label>Tu Obra Maestra (Video o Imagen)</label><div class="file-upload-zone" onclick="document.getElementById('file-input').click()"><i data-lucide="clapperboard" size="40" style="color: #64748b; margin-bottom: 10px;"></i><p id="file-name">Seleccionar archivo</p><input type="file" id="file-input" name="media" style="display: none;" accept="video/*,image/*" onchange="previewFile(this)"></div><div id="preview-container"></div></div>
+                        <div class="form-group"><label>Documento PDF (Opcional)</label><div class="file-upload-zone" onclick="document.getElementById('pdf-input').click()" style="border-color: #e2e8f0;"><i data-lucide="file-text" size="40" style="color: #b91c1c; margin-bottom: 10px;"></i><p id="pdf-name">Seleccionar PDF</p><input type="file" id="pdf-input" name="pdf" style="display: none;" accept="application/pdf" onchange="previewPdf(this)"></div><div id="pdf-preview-container" style="margin-top: 15px; display: none;"><div style="display: flex; align-items: center; gap: 15px; background: #f8fafc; padding: 15px; border-radius: 15px; border: 1px solid #e2e8f0;"><i data-lucide="file-text" size="32" style="color: #b91c1c;"></i><div><p id="pdf-preview-name" style="font-weight: 700; color: #1a3a2a; margin: 0;"></p><p style="font-size: 0.85rem; color: #64748b; margin: 0;">Documento PDF listo para publicar</p></div></div></div></div>
                         <button type="submit" class="btn-publish">Publicar <i data-lucide="send"></i></button>
                     </form>
                 </div>
@@ -132,6 +133,17 @@
                     }
                 };
                 reader.readAsDataURL(file);
+            }
+        }
+        function previewPdf(input) {
+            const file = input.files[0];
+            const previewContainer = document.getElementById('pdf-preview-container');
+            const fileName = document.getElementById('pdf-name');
+            const previewName = document.getElementById('pdf-preview-name');
+            if (file) {
+                fileName.textContent = file.name;
+                previewName.textContent = file.name;
+                previewContainer.style.display = 'block';
             }
         }
     </script>

@@ -106,9 +106,33 @@
                         <h2 class="section-title"><i data-lucide="lock"></i> Seguridad</h2>
                         <form action="{{ route('profile.password') }}" method="POST">
                             @csrf @method('PUT')
-                            <div class="form-group"><label>Contraseña Actual</label><input type="password" name="current_password" class="form-control" placeholder="••••••••"></div>
-                            <div class="form-group"><label>Nueva Contraseña</label><input type="password" name="password" class="form-control" placeholder="Mínimo 8 caracteres"></div>
-                            <div class="form-group"><label>Confirmar Nueva Contraseña</label><input type="password" name="password_confirmation" class="form-control" placeholder="Repite la nueva contraseña"></div>
+                            <div class="form-group password-group">
+                                <label>Contraseña Actual</label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="current_password" name="current_password" class="form-control" placeholder="••••••••">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('current_password', this)">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group password-group">
+                                <label>Nueva Contraseña</label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="password" name="password" class="form-control" placeholder="Mínimo 8 caracteres">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group password-group">
+                                <label>Confirmar Nueva Contraseña</label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Repite la nueva contraseña">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('password_confirmation', this)">
+                                        <i data-lucide="eye"></i>
+                                    </button>
+                                </div>
+                            </div>
                             <button type="submit" class="btn-save" style="background: #1a3a2a;"><i data-lucide="shield-check"></i> Actualizar Contraseña</button>
                         </form>
                     </div>
@@ -116,6 +140,25 @@
             </div>
         </div>
     </div>
+    <style>
+        .password-wrapper { position: relative; display: flex; align-items: center; }
+        .password-wrapper input { width: 100%; padding-right: 50px; }
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+        .toggle-password:hover { color: #6ab06a; }
+        .toggle-password svg { width: 20px; height: 20px; }
+    </style>
     <script>
         lucide.createIcons();
         function previewAvatar(input) {
@@ -127,6 +170,18 @@
                 };
                 reader.readAsDataURL(input.files[0]);
             }
+        }
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
         }
     </script>
 </body>

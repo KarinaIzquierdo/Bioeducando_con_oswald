@@ -31,6 +31,26 @@
         .form-control:focus { border-color: #6ab06a; }
         .btn-submit { width: 100%; padding: 18px; background: #6ab06a; color: white; border: none; border-radius: 15px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .btn-submit:hover { background: #5aa05a; transform: translateY(-3px); }
+
+        .file-upload-box {
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            background: #f8fafc;
+            position: relative;
+        }
+        .file-upload-box:hover { border-color: #6ab06a; background: #f0fdf4; }
+        .file-upload-box.has-file { border-color: #6ab06a; background: #f0fdf4; }
+        .file-upload-box input[type="file"] { display: none; }
+        .file-upload-box .upload-icon { color: #94a3b8; margin-bottom: 10px; transition: 0.3s; }
+        .file-upload-box:hover .upload-icon { color: #6ab06a; }
+        .file-upload-box .upload-text { color: #475569; font-weight: 600; font-size: 1rem; }
+        .file-upload-box .upload-hint { color: #94a3b8; font-size: 0.85rem; margin-top: 6px; }
+        .file-upload-box .file-name { color: #1a3a2a; font-weight: 700; margin-top: 10px; font-size: 0.9rem; }
+        .file-preview { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-top: 12px; display: none; }
     </style>
 </head>
 <body>
@@ -67,15 +87,70 @@
                 <p style="color: #64748b; margin-bottom: 30px;">Comparte tu idea innovadora con la comunidad educativa.</p>
                 <form action="{{ route('steam.store_propuesta') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @if(session('success'))
+                        <div style="background: #dcfce7; color: #15803d; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: 600;">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if($errors->any())
+                        <div style="background: #fee2e2; color: #b91c1c; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: 600;">
+                            <ul style="margin-left: 20px;">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="form-group"><label>Título del Proyecto</label><input type="text" name="titulo" class="form-control" placeholder="Ej: Energía Solar Casera" required></div>
                     <div class="form-group"><label>Categoría</label><select name="categoria" class="form-control"><option value="ciencia">Ciencia</option><option value="tecnologia">Tecnología</option><option value="ingenieria">Ingeniería</option><option value="arte">Arte</option><option value="matematicas">Matemáticas</option></select></div>
+                    <div class="form-group"><label>Objetivos del Proyecto</label><textarea name="objetivos" class="form-control" rows="3" placeholder="¿Qué buscas lograr con este proyecto?" required></textarea></div>
+                    <div class="form-group"><label>Materiales Necesarios</label><textarea name="materiales" class="form-control" rows="3" placeholder="Lista los materiales..." required></textarea></div>
+                    <div class="form-group"><label>Impacto Ambiental</label><textarea name="impacto_ambiental" class="form-control" rows="3" placeholder="¿Cómo beneficia al medio ambiente?" required></textarea></div>
                     <div class="form-group"><label>Descripción Detallada</label><textarea name="descripcion" class="form-control" rows="6" placeholder="Explica tu proyecto..." required></textarea></div>
-                    <div class="form-group"><label>Imagen de Portada</label><input type="file" name="imagen" class="form-control" accept="image/*"></div>
+                    <div class="form-group">
+                        <label>Imagen de Portada</label>
+                        <div class="file-upload-box" onclick="document.getElementById('imagen-input').click()">
+                            <input type="file" id="imagen-input" name="imagen" accept="image/*" onchange="previewFile(this)">
+                            <div class="upload-icon"><i data-lucide="image-plus" size="40"></i></div>
+                            <div class="upload-text">Arrastra o haz clic para subir</div>
+                            <div class="upload-hint">JPG, PNG, GIF — máx. 2MB</div>
+                            <div class="file-name" id="file-name" style="display: none;"></div>
+                            <img id="file-preview" class="file-preview" alt="Vista previa">
+                        </div>
+                    </div>
                     <button type="submit" class="btn-submit">Enviar Propuesta <i data-lucide="send"></i></button>
                 </form>
             </div>
         </div>
     </div>
-    <script>lucide.createIcons();</script>
+    <script>
+        lucide.createIcons();
+        function previewFile(input) {
+            const box = input.parentElement;
+            const nameEl = document.getElementById('file-name');
+            const preview = document.getElementById('file-preview');
+            const textEl = box.querySelector('.upload-text');
+            const hintEl = box.querySelector('.upload-hint');
+            const iconEl = box.querySelector('.upload-icon');
+
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                nameEl.innerText = file.name;
+                nameEl.style.display = 'block';
+                box.classList.add('has-file');
+
+                if (textEl) textEl.style.display = 'none';
+                if (hintEl) hintEl.style.display = 'none';
+                if (iconEl) iconEl.style.display = 'none';
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
 </body>
 </html>

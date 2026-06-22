@@ -54,7 +54,8 @@
 
         /* Contenido Principal */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
-        .top-bar { height: 80px; background-color: #744d2d; display: flex; align-items: center; padding: 0 40px; color: white; font-weight: 600; font-size: 1.2rem; }
+        .top-bar { height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; color: white; }
+        .top-bar h2 { color: white; font-size: 1.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin: 0; display: flex; align-items: center; gap: 12px; }
 
         .container { display: flex; gap: 30px; padding: 40px; max-width: 1200px; margin: 0 auto; width: 100%; }
 
@@ -116,6 +117,9 @@
             <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
                 <i data-lucide="book-open"></i> Gestionar PRAE
             </a>
+            <a href="{{ route('admin.profile.edit') }}" class="menu-item {{ Request::is('admin/perfil*') ? 'active' : '' }}">
+                <i data-lucide="user"></i> Mi Perfil
+            </a>
             <a href="#" class="menu-item">
                 <i data-lucide="settings"></i> Configuración
             </a>
@@ -133,7 +137,8 @@
 
     <!-- Contenido Principal -->
     <div class="main-content">
-        <div class="top-bar" style="height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: flex-end; padding: 0 40px; width: 100%; box-sizing: border-box;">
+        <div class="top-bar" style="width: 100%; box-sizing: border-box;">
+            <h2><i data-lucide="flower-2"></i> Comunidad Activa</h2>
             <div style="width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0;">
                 @if(Auth::check() && Auth::user()->foto_path)
                     <img src="{{ asset(Auth::user()->foto_path) }}" style="width: 100%; height: 100%; object-fit: cover;">
@@ -142,20 +147,26 @@
                 @endif
             </div>
         </div>
-        </div>
-                @endif
+
+        <div class="container">
+            <div class="feed">
                 <!-- Caja de Publicación -->
                 <div class="create-post">
                     <form action="{{ route('admin.comunidad_activa.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @if($errors->any())
+                            <div style="background: #fee2e2; color: #b91c1c; padding: 10px 15px; border-radius: 10px; margin-bottom: 10px; font-size: 0.9rem;">
+                                <strong>Error:</strong> {{ $errors->first() }}
+                            </div>
+                        @endif
                         <div class="create-post-header">
                             <div class="avatar-small"><i data-lucide="user"></i></div>
-                            <textarea class="post-input" name="contenido" placeholder="¿Qué acción ambiental realizaste hoy?" rows="2" required></textarea>
+                            <textarea class="post-input" name="contenido" placeholder="¿Qué acción ambiental realizaste hoy?" rows="2">{{ old('contenido') }}</textarea>
                         </div>
                         <div class="post-actions">
                             <div style="display: flex; gap: 20px;">
                                 <!-- Input de archivo oculto -->
-                                <input type="file" id="media-upload" name="media" style="display: none;" accept="image/*,video/*" onchange="document.getElementById('file-name-display').innerText = this.files[0].name">
+                                <input type="file" id="media-upload" name="media" style="display: none;" accept="image/*,video/*,.heic,.heif" onchange="if(this.files[0]) document.getElementById('file-name-display').innerText = this.files[0].name">
                                 <div class="action-icon" onclick="document.getElementById('media-upload').click()">
                                     <i data-lucide="image" style="color: #6ab06a"></i> Foto/Video
                                 </div>
@@ -207,6 +218,12 @@
                                     <source src="{{ asset('storage/' . $post->media_path) }}" type="video/mp4">
                                     Tu navegador no soporta videos.
                                 </video>
+                            </div>
+                        @elseif($post->media_type == 'pdf')
+                            <div style="padding: 0 20px 20px 20px;">
+                                <a href="{{ asset('storage/' . $post->media_path) }}" target="_blank" style="display: flex; align-items: center; gap: 12px; background: #fee2e2; color: #b91c1c; padding: 15px 20px; border-radius: 12px; text-decoration: none; font-weight: 700;">
+                                    <i data-lucide="file-text"></i> Ver / Descargar PDF
+                                </a>
                             </div>
                         @endif
                     @endif

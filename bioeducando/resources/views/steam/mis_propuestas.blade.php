@@ -92,7 +92,6 @@
                 @endif
             </div>
         </div>
-        </div>
 
         <div class="container">
             @if(session('success'))

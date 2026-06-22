@@ -99,12 +99,23 @@
         }
 
         .top-bar {
-            height: 80px;
-            background-color: #744d2d; /* Color café de la imagen */
+            height: 100px;
+            background-color: #744d2d;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: space-between;
             padding: 0 40px;
+        }
+        .top-bar h2 {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .profile-icon {
@@ -320,6 +331,9 @@
             <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
                 <i data-lucide="book-open"></i> Gestionar PRAE
             </a>
+            <a href="{{ route('admin.profile.edit') }}" class="menu-item {{ Request::is('admin/perfil*') ? 'active' : '' }}">
+                <i data-lucide="user"></i> Mi Perfil
+            </a>
             <a href="#" class="menu-item">
                 <i data-lucide="settings"></i> Configuración
             </a>
@@ -338,43 +352,24 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="top-bar" style="height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: flex-end; padding: 0 40px; width: 100%; box-sizing: border-box;">
-            <div style="width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0;">
-                @if(Auth::check() && Auth::user()->foto_path)
-                    <img src="{{ asset(Auth::user()->foto_path) }}" style="width: 100%; height: 100%; object-fit: cover;">
-                @else
-                    <i data-lucide="user" style="width: 28px; height: 28px;"></i>
-                @endif
-            </div>
-        </div>
-        </div>
-                @endif
-                
-                @if(session('error'))
-                    <div style="background: #fee2e2; color: #b91c1c; padding: 10px 20px; border-radius: 10px; border: 1px solid #fecaca; font-weight: 600; font-size: 0.9rem;">
-                        {{ session('error') }}
-                    </div>
-                @endif
-            </div>
-
-            <div class="profile-menu-container" onclick="toggleProfileMenu()">
-                <div class="profile-icon">
-                    <i data-lucide="user" size="30"></i>
+        <div class="top-bar" style="width: 100%; box-sizing: border-box;">
+            <h2 style="color: white;"><i data-lucide="layout-grid"></i> Dashboard</h2>
+            <div class="profile-menu-container" onclick="toggleProfileMenu()" style="position: relative;">
+                <div style="width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0; cursor: pointer;">
+                    @if(Auth::check() && Auth::user()->foto_path)
+                        <img src="{{ asset(Auth::user()->foto_path) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    @else
+                        <i data-lucide="user" style="width: 28px; height: 28px;"></i>
+                    @endif
                 </div>
                 
                 <div id="profileDropdown" class="profile-dropdown">
-                    <a href="{{ route('admin.profile.edit') }}" class="dropdown-item">
-                        Mi Perfil
-                    </a>
-                    <div class="dropdown-item">
-                        Configuración
-                    </div>
+                    <a href="{{ route('admin.profile.edit') }}" class="dropdown-item">Mi Perfil</a>
+                    <div class="dropdown-item">Configuración</div>
                     <div class="dropdown-divider"></div>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="dropdown-item" style="color: #ff4d4d; padding-left: 20px;">
-                            Cerrar Sesión
-                        </button>
+                        <button type="submit" class="dropdown-item" style="color: #ff4d4d; padding-left: 20px; width: 100%; text-align: left; background: none; border: none; cursor: pointer; font-size: 0.9rem;">Cerrar Sesión</button>
                     </form>
                 </div>
             </div>
