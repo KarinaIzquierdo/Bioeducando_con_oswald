@@ -83,6 +83,8 @@
             margin-bottom: 20px;
             border: 4px solid white;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            cursor: pointer;
         }
 
         .avatar-section h3 { color: #1a3a2a; margin-bottom: 5px; }
@@ -177,6 +179,9 @@
             </a>
             <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
                 <i data-lucide="book-open"></i> Gestionar PRAE
+            </a>
+            <a href="{{ route('admin.noticias') }}" class="menu-item {{ Request::is('admin/noticias*') ? 'active' : '' }}">
+                <i data-lucide="newspaper"></i> Noticias
             </a>
             <a href="{{ route('admin.profile.edit') }}" class="menu-item {{ Request::is('admin/perfil*') ? 'active' : '' }}">
                 <i data-lucide="user"></i> Mi Perfil

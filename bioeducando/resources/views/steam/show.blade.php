@@ -45,10 +45,13 @@
             <a href="{{ route('profile.edit') }}" class="menu-item">
                 <i data-lucide="user"></i> Perfil
             </a>
-            <a href="{{ route('retos.publica') }}" class="menu-item">
+            <a href="{{ route('retos.usuario') }}" class="menu-item">
                 <i data-lucide="leaf"></i> Retos Ecológicos
             </a>
-            <a href="{{ route('comunidad.publica') }}" class="menu-item">
+            <a href="{{ route('noticias.usuario') }}" class="menu-item">
+                <i data-lucide="newspaper"></i> Noticias Ambientales
+            </a>
+            <a href="{{ route('comunidad.usuario') }}" class="menu-item">
                 <i data-lucide="flower-2"></i> Comunidad Ambiental
             </a>
             <a href="{{ route('contenido.creacion') }}" class="menu-item">

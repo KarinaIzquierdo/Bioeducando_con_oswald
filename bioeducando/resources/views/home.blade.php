@@ -129,6 +129,16 @@
             transform: scale(1.05);
         }
 
+        .tagline {
+            font-size: 3.2rem;
+            font-weight: 600;
+            color: white;
+            margin-top: 60px;
+            letter-spacing: 6px;
+            opacity: 0.95;
+            text-transform: uppercase;
+        }
+
         .hero-section::before {
             content: '';
             position: absolute;
@@ -155,11 +165,15 @@
         </form>
 
         <div class="nav-links">
-            <a href="{{ route('comunidad.publica') }}">Comunidad Ambiental</a>
-            <a href="{{ route('retos.publica') }}">Retos Ecológicos</a>
-            <div class="user-dropdown">
-                <i data-lucide="user-circle" size="32"></i>
-            </div>
+            @auth
+                <a href="{{ route('comunidad.usuario') }}">Comunidad Ambiental</a>
+                <a href="{{ route('noticias.usuario') }}">Noticias Ambientales</a>
+                <a href="{{ route('retos.usuario') }}">Retos Ecológicos</a>
+            @else
+                <a href="{{ route('comunidad.publica') }}">Comunidad Ambiental</a>
+                <a href="{{ route('noticias.publica') }}">Noticias Ambientales</a>
+                <a href="{{ route('retos.publica') }}">Retos Ecológicos</a>
+            @endauth
         </div>
     </nav>
 
@@ -170,6 +184,7 @@
             </div>
             
             <a href="{{ route('login') }}" class="btn-comenzar">Comenzar</a>
+            <p class="tagline">todo empieza desde casa</p>
         </div>
     </div>
 

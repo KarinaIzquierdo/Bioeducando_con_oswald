@@ -331,6 +331,9 @@
             <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
                 <i data-lucide="book-open"></i> Gestionar PRAE
             </a>
+            <a href="{{ route('admin.noticias') }}" class="menu-item {{ Request::is('admin/noticias*') ? 'active' : '' }}">
+                <i data-lucide="newspaper"></i> Noticias
+            </a>
             <a href="{{ route('admin.profile.edit') }}" class="menu-item {{ Request::is('admin/perfil*') ? 'active' : '' }}">
                 <i data-lucide="user"></i> Mi Perfil
             </a>

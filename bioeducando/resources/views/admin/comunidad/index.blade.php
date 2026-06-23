@@ -3,61 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comunidad Activa - EcoMuro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Comunidad Ambiental - Bioeducando</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { display: flex; height: 100vh; background-color: #f0f2f0; }
+        body { background-color: #f0f2f0; min-height: 100vh; display: flex; }
 
-        /* Sidebar */
-        .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; }
-        .admin-title { font-size: 2rem; font-weight: 600; color: #000; margin-bottom: 40px; text-align: center; width: 100%; }
-        .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; }
-        .menu-item i { margin-right: 12px; }
-        .menu-item.active { background-color: #3d5a44; }
-        .sidebar-footer {
-            margin-top: auto;
+        /* Sidebar Admin */
+        .sidebar {
+            width: 260px;
+            background-color: #6ab06a;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            padding: 20px 0;
-            width: 100%;
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+            z-index: 1000;
+            left: 0;
+            top: 0;
         }
+        .sidebar-title { font-size: 2.2rem; font-weight: 600; color: #000; margin-bottom: 40px; text-align: center; width: 100%; }
+        .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; font-size: 1rem; }
+        .menu-item i { margin-right: 12px; width: 20px; }
+        .menu-item.active { background-color: #3d5a44; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .menu-item:hover:not(.active) { background-color: rgba(255,255,255,0.1); }
+        .sidebar-footer { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 15px; padding: 20px 0; width: 100%; }
+        .sidebar-logo { width: 140px; filter: brightness(0); margin-bottom: 5px; }
+        .btn-logout { width: 100%; padding: 12px; background-color: #3d5a44; color: white; border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; transition: 0.3s; font-size: 0.95rem; }
+        .btn-logout:hover { background-color: #2d4433; }
 
-        .sidebar-logo { 
-            width: 140px; 
-            filter: brightness(0); 
-            margin-bottom: 5px; 
-        }
-
-        .btn-logout {
-            width: 100%;
-            padding: 12px;
-            background-color: #3d5a44;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-weight: 600;
-            transition: 0.3s;
-            font-size: 0.95rem;
-        }
-        .btn-logout:hover {
-            background-color: #2d4433;
-        }
-
-        /* Contenido Principal */
-        .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+        /* Main Content */
+        .main-content { flex: 1; margin-left: 260px; display: flex; flex-direction: column; min-height: 100vh; }
         .top-bar { height: 100px; background-color: #744d2d; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; color: white; }
         .top-bar h2 { color: white; font-size: 1.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin: 0; display: flex; align-items: center; gap: 12px; }
+        .profile-icon { width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0; }
+        .profile-icon img { width: 100%; height: 100%; object-fit: cover; }
 
-        .container { display: flex; gap: 30px; padding: 40px; max-width: 1200px; margin: 0 auto; width: 100%; }
+        .container { display: flex; gap: 30px; padding: 30px 40px; max-width: 1100px; margin: 0 auto; width: 100%; }
 
         /* Muro de Publicaciones */
         .feed { flex: 2; display: flex; flex-direction: column; gap: 25px; }
@@ -94,54 +77,34 @@
     </style>
 </head>
 <body>
-
-    <!-- Sidebar Izquierda -->
     <div class="sidebar">
-        <h1 class="admin-title">Admin</h1>
+        <h1 class="sidebar-title">Admin</h1>
         <nav>
-            <a href="{{ route('admin.dashboard') }}" class="menu-item {{ Request::is('admin') ? 'active' : '' }}">
-                <i data-lucide="layout-dashboard"></i> Dashboard
-            </a>
-            <a href="{{ route('usuarios.index') }}" class="menu-item {{ Request::is('admin/usuarios*') ? 'active' : '' }}">
-                <i data-lucide="users"></i> Usuarios
-            </a>
-            <a href="{{ route('admin.retos') }}" class="menu-item {{ Request::is('admin/retos*') ? 'active' : '' }}">
-                <i data-lucide="leaf"></i> Retos Ecológicos
-            </a>
-            <a href="{{ route('admin.comunidad_activa') }}" class="menu-item {{ Request::is('admin/comunidad-activa*') ? 'active' : '' }}">
-                <i data-lucide="flower-2"></i> Comunidad Activa
-            </a>
-            <a href="{{ route('admin.steam.index') }}" class="menu-item {{ Request::is('admin/steam*') ? 'active' : '' }}">
-                <i data-lucide="microscope"></i> Gestionar STEAM
-            </a>
-            <a href="{{ route('admin.prae.index') }}" class="menu-item {{ Request::is('admin/prae*') ? 'active' : '' }}">
-                <i data-lucide="book-open"></i> Gestionar PRAE
-            </a>
-            <a href="{{ route('admin.profile.edit') }}" class="menu-item {{ Request::is('admin/perfil*') ? 'active' : '' }}">
-                <i data-lucide="user"></i> Mi Perfil
-            </a>
-            <a href="#" class="menu-item">
-                <i data-lucide="settings"></i> Configuración
-            </a>
+            <a href="{{ route('admin.dashboard') }}" class="menu-item"><i data-lucide="layout-grid"></i> Dashboard</a>
+            <a href="{{ route('usuarios.index') }}" class="menu-item"><i data-lucide="users"></i> Usuarios</a>
+            <a href="{{ route('admin.retos') }}" class="menu-item"><i data-lucide="leaf"></i> Retos Ecológicos</a>
+            <a href="{{ route('admin.comunidad_activa') }}" class="menu-item active"><i data-lucide="flower-2"></i> Comunidad Activa</a>
+            <a href="{{ route('admin.steam.index') }}" class="menu-item"><i data-lucide="microscope"></i> Gestionar STEAM</a>
+            <a href="{{ route('admin.prae.index') }}" class="menu-item"><i data-lucide="book-open"></i> Gestionar PRAE</a>
+            <a href="{{ route('admin.noticias') }}" class="menu-item"><i data-lucide="newspaper"></i> Noticias</a>
+            <a href="{{ route('admin.profile.edit') }}" class="menu-item"><i data-lucide="user"></i> Mi Perfil</a>
+            <a href="#" class="menu-item"><i data-lucide="settings"></i> Configuración</a>
         </nav>
         <div class="sidebar-footer">
             <img src="/imagenes/Logo.svg" alt="Logo" class="sidebar-logo">
             <form action="{{ route('logout') }}" method="POST" style="width: 100%;">
                 @csrf
-                <button type="submit" class="btn-logout">
-                    <i data-lucide="log-out"></i> Cerrar Sesión
-                </button>
+                <button type="submit" class="btn-logout"><i data-lucide="log-out"></i> Cerrar Sesión</button>
             </form>
         </div>
     </div>
 
-    <!-- Contenido Principal -->
     <div class="main-content">
-        <div class="top-bar" style="width: 100%; box-sizing: border-box;">
-            <h2><i data-lucide="flower-2"></i> Comunidad Activa</h2>
-            <div style="width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0;">
+        <div class="top-bar">
+            <h2><i data-lucide="flower-2"></i> Comunidad Ambiental</h2>
+            <div class="profile-icon">
                 @if(Auth::check() && Auth::user()->foto_path)
-                    <img src="{{ asset(Auth::user()->foto_path) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    <img src="{{ asset(Auth::user()->foto_path) }}">
                 @else
                     <i data-lucide="user" style="width: 28px; height: 28px;"></i>
                 @endif
@@ -298,6 +261,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <script>

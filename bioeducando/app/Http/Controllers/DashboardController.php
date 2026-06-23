@@ -55,7 +55,7 @@ class DashboardController extends Controller
             return redirect()->route('docente.dashboard');
         }
 
-        // Al iniciar sesión, el usuario normal irá directamente a la Comunidad Ambiental
-        return redirect()->route('comunidad.publica');
+        // Al iniciar sesión, el usuario normal irá directamente a la Comunidad Ambiental (panel de usuario)
+        return redirect()->route('comunidad.usuario');
     }
 }

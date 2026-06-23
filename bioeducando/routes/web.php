@@ -18,8 +18,30 @@ Route::get('/', function () {
 })->name('home');
 
 Route::post("/comunidad-ambiental/publicar", [App\Http\Controllers\ComunidadController::class, "store"])->name("comunidad.publicar_user");
+Route::post('/comunidad/{id}/like', [App\Http\Controllers\ComunidadController::class, 'toggleLike'])->name('comunidad.like');
 Route::get('/comunidad-ambiental', [App\Http\Controllers\PublicComunidadController::class, 'index'])->name('comunidad.publica');
+Route::get('/panel/comunidad', function() {
+    $publicaciones = \App\Models\Publicacion::with(['user', 'comentarios.user'])->latest()->get();
+    return view('comunidad.usuario', compact('publicaciones'));
+})->name('comunidad.usuario');
+Route::post('/noticias/{id}/like', [App\Http\Controllers\Admin\NoticiaController::class, 'toggleLike'])->name('noticias.like');
+
+Route::get('/noticias-ambientales', function() {
+    if (Auth::check()) {
+        return redirect()->route('noticias.usuario');
+    }
+    $noticias = \App\Models\Noticia::with('user')->where('estado', 'activa')->latest()->get();
+    return view('noticias.index', compact('noticias'));
+})->name('noticias.publica');
 Route::get('/nuestros-retos', [App\Http\Controllers\PublicRetoController::class, 'index'])->name('retos.publica');
+Route::get('/panel/retos', function() {
+    $retos = \App\Models\Reto::where('estado', 'activa')->get();
+    return view('retos.usuario', compact('retos'));
+})->name('retos.usuario');
+Route::get('/panel/noticias', function() {
+    $noticias = \App\Models\Noticia::with(['user', 'comentarios.user'])->where('estado', 'activa')->latest()->get();
+    return view('noticias.usuario', compact('noticias'));
+})->name('noticias.usuario');
 Route::get('/buscar', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
 
 // Autenticación
@@ -90,6 +112,9 @@ Route::middleware(['auth'])->group(function () {
         return view('prae.show', compact('proyecto'));
     })->name('prae.show');
 
+    // Comentarios para noticias (usuarios autenticados)
+    Route::post('/noticias/{id}/comentar', [App\Http\Controllers\Admin\NoticiaController::class, 'comentar'])->name('noticias.comentar');
+
     // Módulo Admin
     Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->group(function () {
         Route::get('/', [App\Http\Controllers\DashboardController::class, 'admin'])->name('admin.dashboard');
@@ -127,6 +152,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/usuarios', [App\Http\Controllers\UsuarioController::class, 'index'])->name('usuarios.index');
         Route::get('/usuarios/crear', [App\Http\Controllers\UsuarioController::class, 'create'])->name('usuarios.create');
         Route::post('/usuarios', [App\Http\Controllers\UsuarioController::class, 'store'])->name('usuarios.store');
+
+        // Noticias Ambientales
+        Route::get('/noticias', [App\Http\Controllers\Admin\NoticiaController::class, 'index'])->name('admin.noticias');
+        Route::get('/noticias/crear', [App\Http\Controllers\Admin\NoticiaController::class, 'create'])->name('admin.noticias.create');
+        Route::post('/noticias', [App\Http\Controllers\Admin\NoticiaController::class, 'store'])->name('admin.noticias.store');
+        Route::get('/noticias/editar/{id}', [App\Http\Controllers\Admin\NoticiaController::class, 'edit'])->name('admin.noticias.edit');
+        Route::put('/noticias/editar/{id}', [App\Http\Controllers\Admin\NoticiaController::class, 'update'])->name('admin.noticias.update');
+        Route::delete('/noticias/{id}', [App\Http\Controllers\Admin\NoticiaController::class, 'destroy'])->name('admin.noticias.destroy');
 
         // Perfil del Administrador
         Route::get('/perfil', [App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('admin.profile.edit');

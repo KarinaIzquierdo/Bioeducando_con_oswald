@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrarse - Bioeducando con Oswald</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body, html { height: 100%; overflow: hidden; }
@@ -97,6 +98,33 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 50px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .toggle-password:hover {
+            color: #444;
+        }
+
         .btn-register {
             width: 100%;
             background: #6ab06a;
@@ -159,12 +187,22 @@
 
                 <div class="form-group">
                     <label>contraseña</label>
-                    <input type="password" name="password" required placeholder="Mínimo 8 caracteres">
+                    <div class="password-wrapper">
+                        <input type="password" name="password" id="password" required placeholder="Mínimo 8 caracteres">
+                        <button type="button" class="toggle-password" data-target="password">
+                            <i data-lucide="eye"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label>confirmar contraseña</label>
-                    <input type="password" name="password_confirmation" required placeholder="Repite tu contraseña">
+                    <div class="password-wrapper">
+                        <input type="password" name="password_confirmation" id="password-confirm" required placeholder="Repite tu contraseña">
+                        <button type="button" class="toggle-password" data-target="password-confirm">
+                            <i data-lucide="eye"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn-register">crear cuenta</button>
@@ -172,6 +210,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    lucide.createIcons();
+
+    document.querySelectorAll('.toggle-password').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const targetId = this.dataset.target;
+            const input = document.getElementById(targetId);
+            const isVisible = input.type === 'text';
+            input.type = isVisible ? 'password' : 'text';
+
+            const icon = this.querySelector('i');
+            icon.setAttribute('data-lucide', isVisible ? 'eye' : 'eye-off');
+            lucide.createIcons();
+        });
+    });
+</script>
 
 </body>
 </html>

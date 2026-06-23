@@ -58,8 +58,9 @@
         <h1 class="sidebar-title">Usuario</h1>
         <nav>
             <a href="{{ route('profile.edit') }}" class="menu-item"><i data-lucide="user"></i> Perfil</a>
-            <a href="{{ route('retos.publica') }}" class="menu-item"><i data-lucide="leaf"></i> Retos Ecológicos</a>
-            <a href="{{ route('comunidad.publica') }}" class="menu-item"><i data-lucide="flower-2"></i> Comunidad Ambiental</a>
+            <a href="{{ route('retos.usuario') }}" class="menu-item"><i data-lucide="leaf"></i> Retos Ecológicos</a>
+            <a href="{{ route('noticias.usuario') }}" class="menu-item"><i data-lucide="newspaper"></i> Noticias Ambientales</a>
+            <a href="{{ route('comunidad.usuario') }}" class="menu-item"><i data-lucide="flower-2"></i> Comunidad Ambiental</a>
             <a href="{{ route('contenido.creacion') }}" class="menu-item"><i data-lucide="clapperboard"></i> Eco-Estudio</a>
             <a href="{{ route('steam.proyectos') }}" class="menu-item active"><i data-lucide="microscope"></i> Proyectos STEAM</a>
             <a href="{{ route('prae.proyectos') }}" class="menu-item"><i data-lucide="book-open"></i> Proyectos PRAE</a>

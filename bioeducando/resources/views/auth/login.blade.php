@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bioeducando con Oswald - Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body, html { height: 100%; overflow: hidden; }
@@ -102,6 +103,33 @@
             border-color: #6ab06a;
         }
 
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 50px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+        }
+
+        .toggle-password:hover {
+            color: #444;
+        }
+
         .checkbox-group { display: flex; align-items: center; margin-left: 10px; margin-bottom: 30px; }
         .checkbox-group input { width: 18px; height: 18px; margin-right: 12px; cursor: pointer; }
         .checkbox-group label { color: #444; font-weight: 600; cursor: pointer; }
@@ -175,12 +203,12 @@
 
                 <div class="form-group">
                     <label>contraseña</label>
-                    <input type="password" name="password" id="password" required>
-                </div>
-
-                <div class="checkbox-group">
-                    <input type="checkbox" id="show-pass">
-                    <label for="show-pass">mostrar contraseña</label>
+                    <div class="password-wrapper">
+                        <input type="password" name="password" id="password" required>
+                        <button type="button" class="toggle-password" id="toggle-password">
+                            <i data-lucide="eye"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn-login">iniciar sesión</button>
@@ -192,9 +220,19 @@
 </div>
 
 <script>
-    document.getElementById('show-pass').addEventListener('change', function() {
-        const passInput = document.getElementById('password');
-        passInput.type = this.checked ? 'text' : 'password';
+    lucide.createIcons();
+
+    const toggleBtn = document.getElementById('toggle-password');
+    const passInput = document.getElementById('password');
+    let isVisible = false;
+
+    toggleBtn.addEventListener('click', function() {
+        isVisible = !isVisible;
+        passInput.type = isVisible ? 'text' : 'password';
+        // Cambiar el icono
+        const icon = this.querySelector('i');
+        icon.setAttribute('data-lucide', isVisible ? 'eye-off' : 'eye');
+        lucide.createIcons();
     });
 </script>
 

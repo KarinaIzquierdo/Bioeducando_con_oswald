@@ -12,7 +12,7 @@ class ComunidadController extends Controller
 {
     public function index()
     {
-        // Cargamos las publicaciones con sus usuarios y sus comentarios (con los autores de los comentarios)
+        // Cargamos las publicaciones con sus usuarios y sus comentarios
         $publicaciones = Publicacion::with(['user', 'comentarios.user'])->latest()->get();
         return view('admin.comunidad.index', compact('publicaciones'));
     }
@@ -50,7 +50,7 @@ class ComunidadController extends Controller
             return redirect()->route('admin.comunidad_activa')->with('success', '¡Publicación compartida con éxito!');
         }
 
-        return redirect()->route('comunidad.publica')->with('success', '¡Publicación compartida con éxito!');
+        return redirect()->route('comunidad.usuario')->with('success', '¡Publicación compartida con éxito!');
     }
 
     public function destroy($id)
@@ -74,6 +74,27 @@ class ComunidadController extends Controller
             return redirect()->route('admin.comunidad_activa')->with('success', 'Publicación eliminada correctamente.');
         }
 
-        return redirect()->route('comunidad.publica')->with('success', 'Publicación eliminada correctamente.');
+        return redirect()->route('comunidad.usuario')->with('success', 'Publicación eliminada correctamente.');
+    }
+
+    public function toggleLike(Request $request, $id)
+    {
+        $post = Publicacion::findOrFail($id);
+        $action = $request->input('action'); // 'like' or 'unlike'
+
+        if ($action === 'like') {
+            $post->increment('likes_count');
+        } elseif ($action === 'unlike') {
+            $post->decrement('likes_count');
+            if ($post->likes_count < 0) {
+                $post->likes_count = 0;
+                $post->save();
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'likes_count' => $post->likes_count
+        ]);
     }
 }
