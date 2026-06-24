@@ -35,10 +35,11 @@
 
         .container { padding: 40px 20px; max-width: 720px; margin: 0 auto; }
         .feed { display: flex; flex-direction: column; gap: 20px; }
-        .noticia-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: 0.2s; }
+        .noticia-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: 0.2s; user-select: none; -webkit-user-select: none; }
         .noticia-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .noticia-img { width: 100%; max-height: 400px; object-fit: cover; display: block; }
-        .noticia-video { width: 100%; max-height: 400px; display: block; background: #000; }
+        .noticia-card ::selection { background: transparent; }
+        .noticia-img { width: 100%; max-height: 400px; object-fit: cover; display: block; user-select: none; -webkit-user-select: none; }
+        .noticia-video { width: 100%; max-height: 400px; display: block; background: #000; user-select: none; -webkit-user-select: none; }
         .noticia-pdf { width: 100%; height: 180px; background: #f0f0f0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #6ab06a; gap: 10px; }
         .noticia-body { padding: 16px 20px; }
         .noticia-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
@@ -55,6 +56,10 @@
         .noticia-footer { padding: 10px 20px; border-top: 1px solid #f0f0f0; display: flex; gap: 20px; }
         .noticia-action { color: #64748b; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 6px; cursor: pointer; transition: 0.2s; padding: 4px 0; text-decoration: none; }
         .noticia-action:hover { color: #6ab06a; }
+        .noticia-action.liked { color: #e11d48; }
+        .noticia-action.liked:hover { color: #be123c; }
+        .heart-icon { fill: none !important; color: currentColor !important; }
+        .heart-icon.filled { fill: #e11d48 !important; color: #e11d48 !important; }
     </style>
 </head>
 <body>
@@ -112,9 +117,9 @@
                 @endif
 
                 <div class="noticia-footer">
-                    <div class="noticia-action" onclick="toggleLike(this, {{ $noticia->id }})" style="cursor: pointer;">
-                        <i data-lucide="heart" size="18"></i>
-                        <span>Me gusta</span>
+                    <div class="noticia-action {{ in_array($noticia->id, $likedNoticias) ? 'liked' : '' }}" onclick="toggleLike(this, {{ $noticia->id }})" style="cursor: pointer;">
+                        <i data-lucide="heart" size="18" class="heart-icon {{ in_array($noticia->id, $likedNoticias) ? 'filled' : '' }}"></i>
+                        <span class="like-text">{{ in_array($noticia->id, $likedNoticias) ? 'Te gusta' : 'Me gusta' }}</span>
                         <span class="like-count">({{ $noticia->likes_count }})</span>
                     </div>
                 </div>
@@ -153,7 +158,19 @@
                 });
                 const data = await res.json();
 
+                const heart = btn.querySelector('.heart-icon');
+                const text = btn.querySelector('.like-text');
                 const count = btn.querySelector('.like-count');
+
+                if (data.liked) {
+                    btn.classList.add('liked');
+                    heart.classList.add('filled');
+                    if (text) text.textContent = 'Te gusta';
+                } else {
+                    btn.classList.remove('liked');
+                    heart.classList.remove('filled');
+                    if (text) text.textContent = 'Me gusta';
+                }
                 if (count) count.textContent = '(' + data.likes_count + ')';
             } catch (err) {
                 console.error('Error:', err);

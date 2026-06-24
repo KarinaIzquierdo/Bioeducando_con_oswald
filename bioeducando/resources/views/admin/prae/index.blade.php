@@ -74,6 +74,13 @@
 
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 30px; border-radius: 20px; width: 100%; max-width: 500px; }
+
+        .file-input-wrapper { position: relative; width: 100%; }
+        .file-input-wrapper input[type="file"] { position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .file-input-label { display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px 16px; border: 2px dashed #e2e8f0; border-radius: 12px; background: #f8fafc; color: #64748b; font-size: 0.95rem; cursor: pointer; transition: 0.3s; }
+        .file-input-label:hover { border-color: #6ab06a; background: #f0fdf4; color: #1a3a2a; }
+        .file-input-label i { color: #6ab06a; flex-shrink: 0; }
+        .file-name { margin-left: auto; font-size: 0.85rem; color: #94a3b8; }
     </style>
 </head>
 <body>
@@ -270,7 +277,14 @@
                 </div>
                 <div class="form-group">
                     <label>Archivo PDF</label>
-                    <input type="file" name="archivo" class="form-control" accept="application/pdf" required>
+                    <div class="file-input-wrapper">
+                        <input type="file" name="archivo" id="archivoInput" accept="application/pdf" required>
+                        <div class="file-input-label" onclick="document.getElementById('archivoInput').click()">
+                            <i data-lucide="upload-cloud" size="20"></i>
+                            <span id="archivoText">Seleccionar archivo PDF</span>
+                            <span class="file-name" id="archivoNombre"></span>
+                        </div>
+                    </div>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: flex-end;">
                     <button type="button" class="btn-save" style="background: #ccc;" onclick="closeModal('documentoModal')">Cancelar</button>
@@ -284,6 +298,18 @@
         lucide.createIcons();
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        document.getElementById('archivoInput').addEventListener('change', function() {
+            const text = document.getElementById('archivoText');
+            const nombre = document.getElementById('archivoNombre');
+            if (this.files && this.files[0]) {
+                text.textContent = 'Archivo seleccionado:';
+                nombre.textContent = this.files[0].name;
+            } else {
+                text.textContent = 'Seleccionar archivo PDF';
+                nombre.textContent = '';
+            }
+        });
     </script>
 </body>
 </html>

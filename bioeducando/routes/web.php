@@ -31,7 +31,8 @@ Route::get('/noticias-ambientales', function() {
         return redirect()->route('noticias.usuario');
     }
     $noticias = \App\Models\Noticia::with('user')->where('estado', 'activa')->latest()->get();
-    return view('noticias.index', compact('noticias'));
+    $likedNoticias = session('noticias_liked', []);
+    return view('noticias.index', compact('noticias', 'likedNoticias'));
 })->name('noticias.publica');
 Route::get('/nuestros-retos', [App\Http\Controllers\PublicRetoController::class, 'index'])->name('retos.publica');
 Route::get('/panel/retos', function() {

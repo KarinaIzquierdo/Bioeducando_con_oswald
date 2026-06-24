@@ -135,9 +135,19 @@ class NoticiaController extends Controller
                 $liked = true;
             }
         } else {
-            // Visitante anónimo: solo incrementa
-            $noticia->increment('likes_count');
-            $liked = true;
+            // Visitante anónimo: toggle con session
+            $likedIds = session('noticias_liked', []);
+            if (in_array($id, $likedIds)) {
+                $likedIds = array_diff($likedIds, [$id]);
+                session(['noticias_liked' => array_values($likedIds)]);
+                $noticia->decrement('likes_count');
+                $liked = false;
+            } else {
+                $likedIds[] = $id;
+                session(['noticias_liked' => $likedIds]);
+                $noticia->increment('likes_count');
+                $liked = true;
+            }
         }
 
         return response()->json([
