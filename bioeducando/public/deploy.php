@@ -48,17 +48,20 @@ if (!$git) {
 
 $output = [];
 
-// Si no es un repo git, lo inicializa; si ya lo es, hace pull
-if (!is_dir($projectRoot . '/.git')) {
-    $output[] = 'Inicializando repositorio...';
-    $output[] = shell_exec("$git init 2>&1");
-    $output[] = shell_exec("$git remote add origin https://github.com/KarinaIzquierdo/Bioeducando_con_oswald.git 2>&1");
-    $output[] = shell_exec("$git fetch origin 2>&1");
-    $output[] = shell_exec("$git reset --hard origin/main 2>&1");
+// Directorio temporal dentro de storage (ignorado en git)
+$repoDir = $projectRoot . '/storage/deploy-repo';
+
+if (!is_dir($repoDir . '/.git')) {
+    $output[] = 'Clonando repositorio...';
+    $output[] = shell_exec($git . ' clone --depth=1 https://github.com/KarinaIzquierdo/Bioeducando_con_oswald.git ' . escapeshellarg($repoDir) . ' 2>&1');
 } else {
-    $output[] = 'Actualizando con git pull...';
-    $output[] = shell_exec("$git pull origin main 2>&1");
+    $output[] = 'Actualizando repositorio...';
+    $output[] = shell_exec($git . ' -C ' . escapeshellarg($repoDir) . ' pull 2>&1');
 }
+
+// Copiar solo la carpeta bioeducando/ del repo a la raíz del proyecto
+$output[] = 'Copiando archivos...';
+$output[] = shell_exec('cp -R ' . escapeshellarg($repoDir . '/bioeducando/.') . ' ' . escapeshellarg($projectRoot . '/') . ' 2>&1');
 
 // Limpiar caché de vistas para ver cambios en Blade
 $output[] = 'Limpiando caché de vistas...';
