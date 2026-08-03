@@ -163,8 +163,19 @@
         }
 
         @media (max-width: 768px) {
-            .login-container { flex-direction: column; height: auto; overflow-y: auto; }
-            body, html { height: auto; overflow-y: auto; }
+            body, html {
+                height: auto !important;
+                overflow: auto !important;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+            }
+            .login-container {
+                flex-direction: column !important;
+                height: auto !important;
+                min-height: 100vh !important;
+                width: 100% !important;
+                overflow: visible !important;
+            }
             .left-side {
                 width: 100%;
                 height: auto;
