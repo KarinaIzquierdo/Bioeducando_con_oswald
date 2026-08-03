@@ -163,8 +163,46 @@
         }
 
         @media (max-width: 768px) {
-            .login-container { flex-direction: column; }
-            .left-side, .right-side { width: 100%; height: 50%; }
+            .login-container { flex-direction: column; height: auto; overflow-y: auto; }
+            body, html { height: auto; overflow-y: auto; }
+            .left-side {
+                width: 100%;
+                height: auto;
+                min-height: auto;
+                padding: 20px 15px;
+                position: relative;
+                z-index: 1;
+                overflow: hidden;
+            }
+            .right-side {
+                width: 100%;
+                height: auto;
+                min-height: auto;
+                padding: 10px;
+                position: relative;
+                z-index: 2;
+                background: #ededed;
+            }
+            .logo-img-original { width: 120px; margin-bottom: 8px; }
+            .slogan { font-size: 0.95rem; margin-top: 8px; }
+            .form-card {
+                max-width: 100%;
+                width: 100%;
+                padding: 10px 5px;
+                border-radius: 0;
+                margin: 0;
+                background: transparent;
+                box-shadow: none;
+            }
+            .tabs { border-radius: 15px; margin-bottom: 15px; }
+            .tab { padding: 8px 5px; font-size: 0.8rem; }
+            .form-group { margin-bottom: 10px; }
+            .form-group label { margin-left: 0; font-size: 0.85rem; }
+            .form-group input { padding: 10px 12px; border-radius: 12px; font-size: 0.95rem; }
+            .password-wrapper input { padding-right: 35px; }
+            .toggle-password { right: 10px; }
+            .btn-login { padding: 12px; font-size: 0.85rem; letter-spacing: 1px; border-radius: 15px; }
+            .forgot-link { margin-top: 15px; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -173,7 +211,7 @@
 <div class="login-container">
     <div class="left-side">
         <!-- Ajuste para cargar Logo.svg y convertirlo a blanco -->
-        <img src="/imagenes/Logo.svg" alt="Bioeducando" class="logo-img-original" style="filter: brightness(0) invert(1); width: 350px;">
+        <img src="/imagenes/Logo.svg" alt="Bioeducando" class="logo-img-original" style="filter: brightness(0) invert(1);">
         <p class="slogan">Una comunidad ambiental</p>
     </div>
 
