@@ -10,10 +10,6 @@ class PublicComunidadController extends Controller
 {
     public function index()
     {
-        if (Auth::check()) {
-            return redirect()->route('comunidad.usuario');
-        }
-
         // Cargamos las publicaciones con sus usuarios y sus comentarios (con los autores de los comentarios)
         $publicaciones = Publicacion::with(['user', 'comentarios' => function($query) {
             $query->with('user')->latest();

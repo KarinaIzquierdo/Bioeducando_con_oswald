@@ -36,6 +36,75 @@
         .section-title-detail { font-size: 1.4rem; color: #1a3a2a; font-weight: 800; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
         .section-title-detail i { color: #6ab06a; }
         .section-text { color: #475569; font-size: 1rem; line-height: 1.7; white-space: pre-line; }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 15px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sidebar-title,
+            .admin-title {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                width: 100%;
+            }
+
+            .menu-item {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                margin-bottom: 0;
+            }
+
+            .menu-item i {
+                margin-right: 6px;
+                width: 16px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .top-bar {
+                height: auto;
+                padding: 15px 20px;
+            }
+
+            .top-bar h2 {
+                font-size: 1.4rem;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 <body>

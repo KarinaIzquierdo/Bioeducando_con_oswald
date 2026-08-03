@@ -73,6 +73,92 @@
         .comment-form { display: flex; gap: 10px; margin-top: 20px; }
         .comment-input { flex: 1; padding: 12px 20px; border-radius: 15px; border: 1px solid #e2e8f0; outline: none; font-size: 1rem; transition: 0.3s; }
         .send-btn { background: #6ab06a; color: white; border: none; padding: 0 20px; border-radius: 15px; font-weight: 700; cursor: pointer; }
+        @media (max-width: 768px) {
+            .community-header {
+                padding: 15px 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .community-header h1 {
+                font-size: 1.2rem;
+            }
+
+            .header-actions {
+                flex-wrap: wrap;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .header-btn {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            .create-post-card {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .create-post-header textarea {
+                font-size: 1rem;
+            }
+
+            .create-post-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .btn-submit {
+                width: 100%;
+                text-align: center;
+            }
+
+            .post-card {
+                border-radius: 20px;
+            }
+
+            .post-header {
+                padding: 20px;
+            }
+
+            .post-body {
+                padding: 0 20px 20px;
+                font-size: 1rem;
+            }
+
+            .media-box {
+                margin: 0 20px 20px;
+            }
+
+            .post-actions {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+            }
+
+            .comments-area {
+                padding: 20px;
+            }
+
+            .comment-form {
+                flex-direction: column;
+            }
+
+            .send-btn {
+                width: 100%;
+                padding: 12px;
+            }
+
+            .comment-bubble {
+                padding: 10px 14px;
+            }
+        }
     </style>
 </head>
 <body>

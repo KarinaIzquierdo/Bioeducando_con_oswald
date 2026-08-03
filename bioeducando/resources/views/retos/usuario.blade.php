@@ -50,6 +50,103 @@
         .btn-entendido { background-color: #000; color: white; padding: 12px 40px; border-radius: 15px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; }
         .btn-entendido:hover { transform: scale(1.05); background-color: #333; }
         .close-modal { position: absolute; top: 20px; right: 20px; cursor: pointer; color: #94a3b8; }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 15px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sidebar-title {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                width: 100%;
+            }
+
+            .menu-item {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                margin-bottom: 0;
+            }
+
+            .menu-item i {
+                margin-right: 6px;
+                width: 16px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .top-bar {
+                height: auto;
+                padding: 15px 20px;
+            }
+
+            .top-bar h2 {
+                font-size: 1.4rem;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            .retos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reto-card {
+                padding: 20px;
+                min-height: auto;
+                border-left: 6px solid #6ab06a;
+            }
+
+            .reto-title {
+                font-size: 1.2rem;
+            }
+
+            .reto-desc {
+                font-size: 0.9rem;
+            }
+
+            .btn-aceptar {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+
+            .insignia-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+                width: 90%;
+            }
+
+            .modal h3 {
+                font-size: 1.4rem;
+            }
+        }
     </style>
 </head>
 <body>

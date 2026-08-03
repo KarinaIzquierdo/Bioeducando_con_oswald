@@ -62,6 +62,125 @@
         .comment-form { display: flex; gap: 10px; margin-top: 20px; }
         .comment-input { flex: 1; padding: 12px 20px; border-radius: 15px; border: 1px solid #e2e8f0; outline: none; font-size: 1rem; transition: 0.3s; }
         .send-btn { background: #6ab06a; color: white; border: none; padding: 0 20px; border-radius: 15px; font-weight: 700; cursor: pointer; }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 15px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sidebar-title {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                width: 100%;
+            }
+
+            .menu-item {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                margin-bottom: 0;
+            }
+
+            .menu-item i {
+                margin-right: 6px;
+                width: 16px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .top-bar {
+                height: auto;
+                padding: 15px 20px;
+            }
+
+            .top-bar h2 {
+                font-size: 1.4rem;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            .create-post-card {
+                padding: 20px;
+                border-radius: 20px;
+            }
+
+            .create-post-header textarea {
+                font-size: 1rem;
+            }
+
+            .create-post-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .btn-submit {
+                width: 100%;
+                text-align: center;
+            }
+
+            .post-card {
+                border-radius: 20px;
+            }
+
+            .post-header {
+                padding: 20px;
+            }
+
+            .post-body {
+                padding: 0 20px 20px;
+                font-size: 1rem;
+            }
+
+            .media-box {
+                margin: 0 20px 20px;
+            }
+
+            .post-actions {
+                padding: 15px 20px;
+                flex-wrap: wrap;
+            }
+
+            .comments-area {
+                padding: 20px;
+            }
+
+            .comment-form {
+                flex-direction: column;
+            }
+
+            .send-btn {
+                width: 100%;
+                padding: 12px;
+            }
+
+            .comment-bubble {
+                padding: 10px 14px;
+            }
+        }
     </style>
 </head>
 <body>

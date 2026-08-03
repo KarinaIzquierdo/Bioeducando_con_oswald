@@ -60,6 +60,59 @@
         .noticia-action.liked:hover { color: #be123c; }
         .heart-icon { fill: none !important; color: currentColor !important; }
         .heart-icon.filled { fill: #e11d48 !important; color: #e11d48 !important; }
+        @media (max-width: 768px) {
+            .noticias-header {
+                padding: 15px 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .noticias-header h1 {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            .noticia-img, .noticia-video {
+                max-height: 250px;
+            }
+
+            .noticia-body {
+                padding: 12px 16px;
+            }
+
+            .noticia-header {
+                flex-wrap: wrap;
+            }
+
+            .noticia-title {
+                font-size: 1rem;
+            }
+
+            .noticia-subtitulo, .noticia-entradilla {
+                font-size: 0.85rem;
+            }
+
+            .noticia-meta-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 0 16px 12px;
+            }
+
+            .noticia-footer {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 10px 16px;
+            }
+
+            .noticia-action {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>

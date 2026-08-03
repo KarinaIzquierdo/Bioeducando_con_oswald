@@ -65,6 +65,103 @@
         .comment-input:focus { border-color: #6ab06a; }
         .comment-btn { background: #6ab06a; color: white; border: none; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
         .comment-btn:hover { background: #3d5a44; }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 15px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sidebar-title {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                width: 100%;
+            }
+
+            .menu-item {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                margin-bottom: 0;
+            }
+
+            .menu-item i {
+                margin-right: 6px;
+                width: 16px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .top-bar {
+                height: auto;
+                padding: 15px 20px;
+            }
+
+            .top-bar h2 {
+                font-size: 1.4rem;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            .noticia-img, .noticia-video {
+                max-height: 250px;
+            }
+
+            .noticia-body {
+                padding: 12px 16px;
+            }
+
+            .noticia-header {
+                flex-wrap: wrap;
+            }
+
+            .noticia-title {
+                font-size: 1rem;
+            }
+
+            .noticia-subtitulo, .noticia-entradilla {
+                font-size: 0.85rem;
+            }
+
+            .noticia-meta-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 0 16px 12px;
+            }
+
+            .noticia-footer {
+                flex-wrap: wrap;
+                gap: 12px;
+                padding: 10px 16px;
+            }
+
+            .noticia-action {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>

@@ -15,8 +15,8 @@
         }
 
         body, html {
-            height: 100%;
-            overflow: hidden;
+            min-height: 100%;
+            overflow-x: hidden;
         }
 
         /* Navbar Superior */
@@ -154,6 +154,73 @@
             position: relative;
             z-index: 2;
         }
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+                height: auto;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 320px;
+            }
+
+            .nav-links {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links a {
+                font-size: 1rem;
+            }
+
+            .hero-section {
+                min-height: 100vh;
+                height: auto;
+                padding: 140px 20px 60px;
+            }
+
+            .main-logo {
+                width: 180px;
+            }
+
+            .btn-comenzar {
+                font-size: 1.6rem;
+                padding: 12px 40px;
+            }
+
+            .tagline {
+                font-size: 1.6rem;
+                letter-spacing: 2px;
+                margin-top: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .main-logo {
+                width: 150px;
+            }
+
+            .btn-comenzar {
+                font-size: 1.3rem;
+                padding: 10px 30px;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -165,15 +232,9 @@
         </form>
 
         <div class="nav-links">
-            @auth
-                <a href="{{ route('comunidad.usuario') }}">Comunidad Ambiental</a>
-                <a href="{{ route('noticias.usuario') }}">Noticias Ambientales</a>
-                <a href="{{ route('retos.usuario') }}">Retos Ecológicos</a>
-            @else
-                <a href="{{ route('comunidad.publica') }}">Comunidad Ambiental</a>
-                <a href="{{ route('noticias.publica') }}">Noticias Ambientales</a>
-                <a href="{{ route('retos.publica') }}">Retos Ecológicos</a>
-            @endauth
+            <a href="{{ route('comunidad.publica') }}">Comunidad Ambiental</a>
+            <a href="{{ route('noticias.publica') }}">Noticias Ambientales</a>
+            <a href="{{ route('retos.publica') }}">Retos Ecológicos</a>
         </div>
     </nav>
 

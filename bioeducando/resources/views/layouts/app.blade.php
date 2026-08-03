@@ -12,9 +12,9 @@
 </head>
 <body class="bg-gray-50">
     <nav class="bg-green-700 p-4 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center text-white font-bold">
-            <a href="/" class="text-xl tracking-tight">Bioeducando con Oswald</a>
-            <div class="space-x-4">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center text-white font-bold gap-4">
+            <a href="/" class="text-xl tracking-tight text-center md:text-left">Bioeducando con Oswald</a>
+            <div class="flex flex-col md:flex-row items-center gap-2 md:gap-4">
                 @auth
                     <a href="{{ route('dashboard') }}" class="hover:underline">Panel</a>
                     <form action="{{ route('logout') }}" method="POST" class="inline">

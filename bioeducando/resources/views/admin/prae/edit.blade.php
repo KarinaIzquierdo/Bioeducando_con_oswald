@@ -25,6 +25,75 @@
         .form-group input:focus, .form-group textarea:focus { border-color: #6ab06a; }
         .btn-save { width: 100%; padding: 15px; background: #1a3a2a; color: white; border: none; border-radius: 15px; font-weight: 700; cursor: pointer; transition: 0.3s; }
         .btn-save:hover { background: #6ab06a; transform: translateY(-3px); }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 15px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sidebar-title,
+            .admin-title {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                width: 100%;
+            }
+
+            .menu-item {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                margin-bottom: 0;
+            }
+
+            .menu-item i {
+                margin-right: 6px;
+                width: 16px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .top-bar {
+                height: auto;
+                padding: 15px 20px;
+            }
+
+            .top-bar h2 {
+                font-size: 1.4rem;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 <body>
@@ -50,7 +119,7 @@
                 <i data-lucide="book-open"></i> Gestionar PRAE
             </a>
             <a href="{{ route('admin.noticias') }}" class="menu-item {{ Request::is('admin/noticias*') ? 'active' : '' }}">
-                <i data-lucide="newspaper"></i> Noticias
+                <i data-lucide="newspaper"></i> Noticias Ambientales
             </a>
             <a href="{{ route('admin.profile.edit') }}" class="menu-item {{ Request::is('admin/perfil*') ? 'active' : '' }}">
                 <i data-lucide="user"></i> Mi Perfil

@@ -27,9 +27,6 @@ Route::get('/panel/comunidad', function() {
 Route::post('/noticias/{id}/like', [App\Http\Controllers\Admin\NoticiaController::class, 'toggleLike'])->name('noticias.like');
 
 Route::get('/noticias-ambientales', function() {
-    if (Auth::check()) {
-        return redirect()->route('noticias.usuario');
-    }
     $noticias = \App\Models\Noticia::with('user')->where('estado', 'activa')->latest()->get();
     $likedNoticias = session('noticias_liked', []);
     return view('noticias.index', compact('noticias', 'likedNoticias'));

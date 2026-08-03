@@ -48,6 +48,75 @@
         .btn-publish:hover { background: #2d4433; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(26, 58, 42, 0.2); }
         #preview-container { margin-top: 20px; border-radius: 15px; overflow: hidden; display: none; }
         #preview-container img, #preview-container video { width: 100%; max-height: 400px; object-fit: contain; }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 15px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sidebar-title,
+            .admin-title {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                width: 100%;
+            }
+
+            .menu-item {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                margin-bottom: 0;
+            }
+
+            .menu-item i {
+                margin-right: 6px;
+                width: 16px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .top-bar {
+                height: auto;
+                padding: 15px 20px;
+            }
+
+            .top-bar h2 {
+                font-size: 1.4rem;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 <body>
@@ -101,7 +170,16 @@
                     <h2 class="upload-title"><i data-lucide="share-2"></i> Compartir</h2>
                     <form action="{{ route('comunidad.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group"><label>Descripción</label><textarea name="contenido" class="form-control" rows="4" placeholder="Cuéntanos sobre tu creación..."></textarea></div>
+                        @if($errors->any())
+                            <div style="background: #fee2e2; color: #b91c1c; padding: 15px; border-radius: 12px; margin-bottom: 20px; font-weight: 600;">
+                                <ul style="margin: 0; padding-left: 20px;">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <div class="form-group"><label>Descripción</label><textarea name="contenido" class="form-control" rows="4" placeholder="Cuéntanos sobre tu creación...">{{ old('contenido') }}</textarea></div>
                         <div class="form-group"><label>Tu Obra Maestra (Video o Imagen)</label><div class="file-upload-zone" onclick="document.getElementById('file-input').click()"><i data-lucide="clapperboard" size="40" style="color: #64748b; margin-bottom: 10px;"></i><p id="file-name">Seleccionar archivo</p><input type="file" id="file-input" name="media" style="display: none;" accept="video/*,image/*" onchange="previewFile(this)"></div><div id="preview-container"></div></div>
                         <div class="form-group"><label>Documento PDF (Opcional)</label><div class="file-upload-zone" onclick="document.getElementById('pdf-input').click()" style="border-color: #e2e8f0;"><i data-lucide="file-text" size="40" style="color: #b91c1c; margin-bottom: 10px;"></i><p id="pdf-name">Seleccionar PDF</p><input type="file" id="pdf-input" name="pdf" style="display: none;" accept="application/pdf" onchange="previewPdf(this)"></div><div id="pdf-preview-container" style="margin-top: 15px; display: none;"><div style="display: flex; align-items: center; gap: 15px; background: #f8fafc; padding: 15px; border-radius: 15px; border: 1px solid #e2e8f0;"><i data-lucide="file-text" size="32" style="color: #b91c1c;"></i><div><p id="pdf-preview-name" style="font-weight: 700; color: #1a3a2a; margin: 0;"></p><p style="font-size: 0.85rem; color: #64748b; margin: 0;">Documento PDF listo para publicar</p></div></div></div></div>
                         <button type="submit" class="btn-publish">Publicar <i data-lucide="send"></i></button>

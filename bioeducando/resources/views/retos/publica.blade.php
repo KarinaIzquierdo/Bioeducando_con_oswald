@@ -45,6 +45,56 @@
         .btn-aceptar { background-color: #3d5a44; color: white; padding: 12px 20px; border-radius: 15px; text-decoration: none; font-weight: 700; font-size: 0.95rem; transition: 0.3s; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; justify-content: center; }
         .btn-aceptar:hover { background-color: #1a3a2a; transform: scale(1.05); }
         .insignia-icon { position: absolute; top: 20px; right: 20px; opacity: 0.1; }
+        @media (max-width: 768px) {
+            .retos-header {
+                padding: 15px 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .retos-header h1 {
+                font-size: 1.2rem;
+            }
+
+            .header-actions {
+                flex-wrap: wrap;
+                width: 100%;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            .retos-grid {
+                gap: 20px;
+                grid-template-columns: 1fr;
+            }
+
+            .reto-card {
+                padding: 20px;
+                min-height: auto;
+                border-left: 6px solid #6ab06a;
+            }
+
+            .reto-title {
+                font-size: 1.2rem;
+            }
+
+            .reto-desc {
+                font-size: 0.9rem;
+            }
+
+            .btn-aceptar {
+                padding: 10px 16px;
+                font-size: 0.9rem;
+            }
+
+            .insignia-icon {
+                width: 40px;
+                height: 40px;
+            }
+        }
     </style>
 </head>
 <body>

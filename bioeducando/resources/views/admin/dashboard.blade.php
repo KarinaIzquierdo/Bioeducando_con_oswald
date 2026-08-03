@@ -304,6 +304,107 @@
         }
 
         .action-btn:hover { background-color: #2d4433; }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                min-height: auto;
+                padding: 15px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+
+            .admin-title {
+                font-size: 1.5rem;
+                margin: 0 0 15px 0;
+                width: auto;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                width: 100%;
+            }
+
+            .menu-item {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                margin-bottom: 0;
+            }
+
+            .menu-item i {
+                margin-right: 6px;
+                width: 16px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main-content {
+                width: 100%;
+            }
+
+            .top-bar {
+                height: auto;
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .top-bar h2 {
+                font-size: 1.4rem;
+            }
+
+            .dashboard-grid {
+                padding: 20px 15px;
+                gap: 15px;
+            }
+
+            .welcome-section {
+                padding: 30px 20px;
+            }
+
+            .welcome-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .welcome-section p {
+                font-size: 1rem;
+            }
+
+            .stat-card {
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .stat-info h3 {
+                font-size: 1.5rem;
+            }
+
+            .summary-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .activity-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -332,7 +433,7 @@
                 <i data-lucide="book-open"></i> Gestionar PRAE
             </a>
             <a href="{{ route('admin.noticias') }}" class="menu-item {{ Request::is('admin/noticias*') ? 'active' : '' }}">
-                <i data-lucide="newspaper"></i> Noticias
+                <i data-lucide="newspaper"></i> Noticias Ambientales
             </a>
             <a href="{{ route('admin.profile.edit') }}" class="menu-item {{ Request::is('admin/perfil*') ? 'active' : '' }}">
                 <i data-lucide="user"></i> Mi Perfil

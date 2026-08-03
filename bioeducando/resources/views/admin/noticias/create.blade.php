@@ -40,6 +40,75 @@
         .file-upload-area { border: 2px dashed #e2e8f0; border-radius: 15px; padding: 40px; text-align: center; cursor: pointer; transition: 0.3s; background: #fafafa; }
         .file-upload-area:hover { border-color: #6ab06a; background: #f0fdf4; }
         .file-upload-area:active { transform: scale(0.98); }
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 15px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .sidebar-title,
+            .admin-title {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+                width: 100%;
+                text-align: center;
+            }
+
+            nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                width: 100%;
+            }
+
+            .menu-item {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                margin-bottom: 0;
+            }
+
+            .menu-item i {
+                margin-right: 6px;
+                width: 16px;
+            }
+
+            .sidebar-footer {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .top-bar {
+                height: auto;
+                padding: 15px 20px;
+            }
+
+            .top-bar h2 {
+                font-size: 1.4rem;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 <body>
@@ -52,7 +121,7 @@
             <a href="{{ route('admin.comunidad_activa') }}" class="menu-item"><i data-lucide="flower-2"></i> Comunidad Activa</a>
             <a href="{{ route('admin.steam.index') }}" class="menu-item"><i data-lucide="microscope"></i> Gestionar STEAM</a>
             <a href="{{ route('admin.prae.index') }}" class="menu-item"><i data-lucide="book-open"></i> Gestionar PRAE</a>
-            <a href="{{ route('admin.noticias') }}" class="menu-item active"><i data-lucide="newspaper"></i> Noticias</a>
+            <a href="{{ route('admin.noticias') }}" class="menu-item active"><i data-lucide="newspaper"></i> Noticias Ambientales</a>
             <a href="{{ route('admin.profile.edit') }}" class="menu-item"><i data-lucide="user"></i> Mi Perfil</a>
             <a href="#" class="menu-item"><i data-lucide="settings"></i> Configuración</a>
         </nav>
@@ -65,6 +134,13 @@
     <div class="main-content">
         <div class="top-bar" style="width: 100%; box-sizing: border-box;">
             <h2><i data-lucide="newspaper"></i> Nueva Noticia</h2>
+            <div style="width: 50px; height: 50px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #744d2d; border: 2px solid white; overflow: hidden; flex-shrink: 0;">
+                @if(Auth::check() && Auth::user()->foto_path)
+                    <img src="{{ asset(Auth::user()->foto_path) }}" style="width: 100%; height: 100%; object-fit: cover;">
+                @else
+                    <i data-lucide="user" style="width: 28px; height: 28px;"></i>
+                @endif
+            </div>
         </div>
 
         <div class="content-padding">
