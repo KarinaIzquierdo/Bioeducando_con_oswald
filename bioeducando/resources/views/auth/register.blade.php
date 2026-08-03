@@ -150,31 +150,40 @@
             .left-side {
                 width: 100%;
                 height: auto;
-                min-height: 25vh;
-                padding: 30px 15px;
+                min-height: auto;
+                padding: 20px 15px;
+                position: relative;
+                z-index: 1;
+                overflow: hidden;
             }
             .right-side {
                 width: 100%;
                 height: auto;
                 min-height: auto;
-                padding: 15px;
+                padding: 10px;
+                position: relative;
+                z-index: 2;
+                background: #ededed;
             }
-            .logo-img-original { width: 160px; margin-bottom: 10px; }
-            .slogan { font-size: 1.3rem; margin-top: 20px; }
+            .logo-img-original { width: 120px; margin-bottom: 8px; }
+            .slogan { font-size: 0.95rem; margin-top: 8px; }
             .form-card {
                 max-width: 100%;
                 width: 100%;
-                padding: 25px 20px;
-                border-radius: 25px;
-                margin: 0 0 20px 0;
+                padding: 10px 5px;
+                border-radius: 0;
+                margin: 0;
+                background: transparent;
+                box-shadow: none;
             }
-            .tabs { flex-direction: row; border-radius: 25px; }
-            .tab { padding: 10px; font-size: 0.9rem; }
-            .form-group { margin-bottom: 12px; }
-            .form-group label { margin-left: 5px; font-size: 0.85rem; }
-            .form-group input { padding: 12px 15px; border-radius: 15px; font-size: 0.95rem; }
-            .password-wrapper input { padding-right: 40px; }
-            .btn-register { padding: 14px; font-size: 0.9rem; letter-spacing: 1px; }
+            .tabs { border-radius: 15px; margin-bottom: 15px; }
+            .tab { padding: 8px 5px; font-size: 0.8rem; }
+            .form-group { margin-bottom: 10px; }
+            .form-group label { margin-left: 0; font-size: 0.85rem; }
+            .form-group input { padding: 10px 12px; border-radius: 12px; font-size: 0.95rem; }
+            .password-wrapper input { padding-right: 35px; }
+            .toggle-password { right: 10px; }
+            .btn-register { padding: 12px; font-size: 0.85rem; letter-spacing: 1px; border-radius: 15px; }
         }
     </style>
 </head>
