@@ -4,8 +4,8 @@
 
 $token = $_GET['token'] ?? '';
 
-// Dominio apunta a public_html; el proyecto está en la subcarpeta bioeducando
-$projectRoot = __DIR__ . '/bioeducando';
+// Dominio apunta a public_html; el proyecto está en la carpeta hermana bioeducando
+$projectRoot = __DIR__ . '/../bioeducando';
 
 if (file_exists($projectRoot . '/vendor/autoload.php')) {
     try {
