@@ -87,14 +87,12 @@ class ProyectoSteamController extends Controller
     public function updateEstado(Request $request, $id)
     {
         $proyecto = ProyectoSteam::findOrFail($id);
-        $request->validate(['estado' => 'required|in:pendiente,aprobado,rechazado']);
-        $proyecto->update(['estado' => $request->estado]);
+        $request->validate(['estado' => 'required|in:aprobado,rechazado']);
+        
+        $proyecto->estado = $request->estado;
+        $proyecto->save();
 
-        $mensaje = match($request->estado) {
-            'aprobado' => 'Proyecto aprobado exitosamente.',
-            'rechazado' => 'Proyecto rechazado.',
-            default => 'Estado actualizado.',
-        };
+        $mensaje = $request->estado == 'aprobado' ? 'Proyecto aprobado exitosamente.' : 'Proyecto rechazado.';
 
         return redirect()->route('admin.steam.index')->with('success', $mensaje);
     }

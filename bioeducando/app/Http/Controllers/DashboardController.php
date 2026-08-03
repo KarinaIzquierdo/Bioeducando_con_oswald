@@ -28,7 +28,7 @@ class DashboardController extends Controller
 
         $actividadPublicaciones = Publicacion::with('user')->latest()->take(3)->get()->map(function($post) {
             return [
-                'texto' => "Nueva publicación de <b>" . ($post->user->name ?? 'Usuario') . "</b> en la comunidad",
+                'texto' => " publicación Nuevade <b>" . ($post->user->name ?? 'Usuario') . "</b> en la comunidad",
                 'tiempo' => $post->created_at->diffForHumans(),
                 'color' => '#3b82f6'
             ];

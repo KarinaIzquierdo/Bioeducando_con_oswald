@@ -19,11 +19,17 @@ class ComunidadController extends Controller
 
     public function store(Request $request)
     {
+        $messages = [
+            'contenido.required' => 'La descripción es obligatoria.',
+            'pdf.max' => 'El archivo PDF no debe pesar más de 20MB.',
+            'media.max' => 'El archivo multimedia no debe pesar más de 25MB.',
+        ];
+
         $request->validate([
             'contenido' => 'required|string',
-            'media' => 'nullable|file|max:20480', // Cualquier tipo de archivo hasta 20MB
-            'pdf' => 'nullable|file|mimes:pdf|max:10240', // Máx 10MB para PDFs
-        ]);
+            'media' => 'nullable|file|max:25600', // 25MB
+            'pdf' => 'nullable|file|max:20480',   // 20MB
+        ], $messages);
 
         $mediaPath = null;
         $mediaType = null;
