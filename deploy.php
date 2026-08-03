@@ -4,10 +4,13 @@
 
 $token = $_GET['token'] ?? '';
 
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+// Dominio apunta a public_html; el proyecto está en la subcarpeta bioeducando
+$projectRoot = __DIR__ . '/bioeducando';
+
+if (file_exists($projectRoot . '/vendor/autoload.php')) {
     try {
-        require __DIR__ . '/vendor/autoload.php';
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+        require $projectRoot . '/vendor/autoload.php';
+        $dotenv = Dotenv\Dotenv::createImmutable($projectRoot);
         $dotenv->safeLoad();
     } catch (Throwable $e) {
         // Continuamos sin entorno
@@ -27,7 +30,6 @@ if (!function_exists('shell_exec')) {
     exit;
 }
 
-$projectRoot = __DIR__;
 chdir($projectRoot);
 
 // Buscar git
