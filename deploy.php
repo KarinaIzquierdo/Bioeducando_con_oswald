@@ -19,6 +19,18 @@ if (file_exists($projectRoot . '/vendor/autoload.php')) {
 
 $expected = $_ENV['DEPLOY_TOKEN'] ?? '';
 
+// Si Dotenv no cargó, leer DEPLOY_TOKEN directamente del .env
+if (!$expected && file_exists($projectRoot . '/.env')) {
+    foreach (file($projectRoot . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        $line = trim($line);
+        if (str_starts_with($line, 'DEPLOY_TOKEN=')) {
+            $expected = trim(substr($line, strlen('DEPLOY_TOKEN=')));
+            $expected = trim($expected, "\x22\x27");
+            break;
+        }
+    }
+}
+
 if (!$expected || $token !== $expected) {
     http_response_code(403);
     echo 'No autorizado. Configura DEPLOY_TOKEN en el .env del servidor.';
