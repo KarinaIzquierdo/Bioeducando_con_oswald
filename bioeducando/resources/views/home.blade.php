@@ -98,6 +98,17 @@
             justify-content: center;
             text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
         }
 
         .logo-container {
@@ -146,7 +157,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.45);
             z-index: 1;
         }
 
@@ -239,6 +250,11 @@
     </nav>
 
     <div class="hero-section">
+        <!-- Video de fondo para computadoras -->
+        <video autoplay muted loop playsinline class="background-video">
+            <source src="/imagenes/fondoinicio.mp4" type="video/mp4">
+        </video>
+        
         <div class="content-wrapper">
             <div class="logo-container">
                 <img src="/imagenes/Logo.svg" alt="Bioeducando Logo" class="main-logo">
