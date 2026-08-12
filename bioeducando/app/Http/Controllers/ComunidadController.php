@@ -22,12 +22,12 @@ class ComunidadController extends Controller
         $messages = [
             'contenido.required' => 'La descripción es obligatoria.',
             'pdf.max' => 'El archivo PDF no debe pesar más de 20MB.',
-            'media.max' => 'El archivo multimedia no debe pesar más de 25MB.',
+            'media.max' => 'El archivo multimedia no debe pesar más de 100MB.',
         ];
 
         $request->validate([
             'contenido' => 'required|string',
-            'media' => 'nullable|file|max:25600', // 25MB
+            'media' => 'nullable|file|max:102400', // 100MB
             'pdf' => 'nullable|file|max:20480',   // 20MB
         ], $messages);
 
