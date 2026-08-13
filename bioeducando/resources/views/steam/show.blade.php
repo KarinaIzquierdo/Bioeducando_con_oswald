@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #f0fdf4; min-height: 100vh; }
+        body { background-color: #f0fdf4; min-min-height: 100vh; }
         .sidebar { width: 260px; background-color: #6ab06a; display: flex; flex-direction: column; padding: 20px; position: fixed; height: 100vh; z-index: 1000; overflow-y: auto; }
         .sidebar-title { font-size: 2.2rem; font-weight: 600; color: #000; margin-bottom: 25px; padding-left: 10px; flex-shrink: 0; }
         .menu-item { display: flex; align-items: center; padding: 12px 15px; color: white; text-decoration: none; margin-bottom: 10px; border-radius: 10px; transition: 0.3s; }

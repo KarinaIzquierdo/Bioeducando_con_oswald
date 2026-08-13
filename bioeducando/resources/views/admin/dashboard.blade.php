@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { display: flex; height: 100vh; background-color: white; }
+        body { display: flex; min-height: 100vh; background-color: white; }
 
         /* Sidebar Izquierda */
         .sidebar {

@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #f0f2f0; min-height: 100vh; display: flex; }
+        body { background-color: #f0f2f0; min-min-height: 100vh; display: flex; }
 
         /* Sidebar Admin */
         .sidebar {

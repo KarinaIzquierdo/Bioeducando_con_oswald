@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: linear-gradient(135deg, #1a3a2a, #0a1a10); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        body { background: linear-gradient(135deg, #1a3a2a, #0a1a10); min-min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
 
         .form-card {
             background: #ededed;

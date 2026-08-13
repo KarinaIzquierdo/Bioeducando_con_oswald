@@ -10,7 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { 
             background-color: #f0fdf4;
-            min-height: 100vh;
+            min-min-height: 100vh;
         }
 
         .sidebar { 

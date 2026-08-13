@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #f0fdf4; min-height: 100vh; }
+        body { background-color: #f0fdf4; min-min-height: 100vh; }
 
         .noticias-header {
             background: linear-gradient(135deg, #1a3a2a 0%, #2d5a3d 100%);

@@ -8,7 +8,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: #f0fdf4; min-height: 100vh; }
+        body { background-color: #f0fdf4; min-min-height: 100vh; }
 
         /* Header público */
         .retos-header {
